@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/user_reservations.css" />
+    <title>User Reservations</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <nav>
+            <ul class="navbar">
+                <li><a href="">Borrowed Books</a></li>
+                <li><a href="">Main Page</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        <div class="content">
+            <h1>Your Reserved Books</h1>
+            <ul class="reserved-books">
+                <!-- Loop through the reserved books data and generate list items -->
+                {% for book in reserved_books %}
+                <li>
+                    <img src="{{ book.image }}" alt="{{ book.title }}" />
+                    <div class="book-info">
+                        <h2>{{ book.title }}</h2>
+                        <p>{{ book.author }}</p>
+                        <!-- Add other book information as needed -->
+                        <button class="cancel-reservation">Cancel Reservation</button>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

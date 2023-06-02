@@ -1,0 +1,140 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/library.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+body {
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    font-weight: bold;
+}
+
+.navbar {
+    top: 0;
+    background-color: black;
+    opacity: 85%;
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.navbar li {
+    float: right;
+}
+
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    background-color: white;
+    color: black;
+}
+
+.form {
+    margin: 2.5rem auto;
+    height: 40rem;
+    background-color: black;
+    color: white;
+    opacity: 85%;
+    border-radius: 1rem;
+    width: 72%;
+    border: 1px solid white;
+}
+
+form {
+    margin: auto;
+    width: 70%;
+    height: 100%;
+}
+
+.labels{
+    /* width: 100%; */
+    height: 80%;
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+.search {
+    margin: 0 auto 0 auto;
+    height: 20%;
+    /* width: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+button {
+    height: 3rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 50%;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+input, select {
+    width: 17rem;
+    height: 3rem;
+}
+
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+}
+
+.books, input, select {
+    margin: 2rem;
+}
+
+.flash {
+    position: relative;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+    height: 3rem;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.message {
+    color: white;
+    font-size: 1.5rem;
+}

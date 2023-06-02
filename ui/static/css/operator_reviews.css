@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/library.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+body {
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    font-weight: bold;
+}
+
+.navbar {
+    top: 0;
+    background-color: black;
+    opacity: 85%;
+    border-bottom: 1px solid white;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.navbar li {
+    float: right;
+}
+
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    background-color: white;
+    color: black;
+}
+
+.form {
+    margin: 2.5rem auto;
+    background-color: black;
+    color: white;
+    opacity: 85%;
+    border-radius: 1rem;
+    width: 72%;
+    border: 1px solid white;
+}
+
+form {
+    margin: auto;
+    width: 70%;
+    height: 100%;
+}
+
+button {
+    font-weight: bold;
+    font-size: 0.5 rem;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    width: 10 rem;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+.pending li {
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem;
+    list-style-type: none;
+}
+
+.pending p {
+    padding: 0;
+    margin: 0 auto;
+}
+
+p {
+    font-size: 16px;
+}
+
+h2 {
+    text-align: center;
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem;
+}
+
+.pending {
+    margin-bottom: 2rem;
+}

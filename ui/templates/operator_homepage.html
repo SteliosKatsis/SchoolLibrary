@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "../static/css/operator_homepage.css" />
+    <title>Operator Main Page</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <nav>
+            <ul class="navbar">
+                <li><a href="operator_homepage.html">Main Page</a></li>
+                <li><a href="operator_users.html">Users Info</a></li>
+                <li><a href="operator_borrowed.html">Borrowed Books</a></li>
+                <li><a href="operator_reserved.html">Reserved Books</a></li>
+                <li><a href="operator_reviews.html">Reviews</a></li>
+            </ul>
+          </nav>
+    </div>
+
+    <div class="form">
+        <form>
+            <div class="labels">
+                <button class="books" type="submit" name="available_books">See All Available Books</button><br>
+
+                <input name="title" type="text" placeholder="Search by Book Title">
+                <input type="radio" name="choice" value="title"><br>
+
+                <input name="author" type="text" placeholder="Search by Book Author">
+                <input type="radio" name="choice" value="author"><br>
+
+                <input name="copies" type="text" placeholder="Search by Available Copies">
+                <input type="radio" name="choice" value="copies"><br>
+
+                <select name="categories">
+                    <option disabled selected value="">Search by Category</option>
+                    <option>Seretakos</option>
+                    <option>Katsis</option>
+                </select>
+                <input type="radio" name="choice" value="category">
+            </div>
+
+            <div class="search">
+                <button class="search" type="submit" name="search">Search</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

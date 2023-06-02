@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fontawesome.com/icons/user?f=classic&s=thin" />
+    <link rel = "stylesheet" href = "../static/css/home.css" />
+    <title>User</title>
+</head>
+<body>
+    {% if message %}
+    <div class="flash">
+        <span class="message">{{ message }}</span>
+        <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    {% endif %}
+
+    <div class="navbar">
+        <nav>
+            <ul class="navbar">
+                <i class="fa-thin fa-user"></i>
+                <li><a href="{{ url_for('edit_personal_info') }}">Personal Info</a></li>
+                <li><a href="">Borrowed Books</a></li>
+                <li><a href="">Reserved Books</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="form">
+        <form>
+            <div class="labels">
+                <button class="books" type="submit" name="available_books">See All Available Books</button><br>
+
+                <input name="title" type="text" placeholder="Search by Book Title"></input>
+                <input type="radio" name="choice" value="title"></input><br>
+
+                <input name="author" type="text" placeholder="Search by Book Author"></input>
+                <input type="radio" name="choice" value="author"></input><br>
+
+                <select name="categories">
+                    <option disabled selected value="">Search by Category</option>
+                    <option>Seretakos</option>
+                    <option>Katsis</option>
+                </select>
+                <input type="radio" name="choice" value="category"></input>
+            </div>
+
+            <div class="search">
+                <button type="submit" name="search">Search</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

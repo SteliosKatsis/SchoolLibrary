@@ -1,0 +1,100 @@
+html {
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/library.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+body {
+    width: 85%;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+    opacity: 85%;
+    border-radius: 1rem;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+
+
+.header {
+    padding: 2rem;
+    text-align: center;
+}
+
+h1, h2 {
+    margin: auto;
+    width: 70%;
+    height: 100%;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    margin-top: 1rem;
+}
+
+form {
+    margin: 0 auto 0 auto;
+}
+
+input, select, .role {
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+}
+
+select {
+    width: 5rem;
+    height: 2rem;
+}
+
+label {
+    display: block;
+}
+
+
+
+fieldset {
+    margin: 0 25%;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid white;
+}
+
+.choice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* border: 2px solid red; */
+}
+
+
+.button {
+    width: 50%;
+    margin: 3rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+button {
+    height: 3rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 60%;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+
+

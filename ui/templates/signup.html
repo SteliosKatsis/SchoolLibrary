@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "../static/css/signup.css" />
+    <title>Sign Up Page</title>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Registration Form</h1>
+        <h2>Please fill out this form with the required information</h2>
+    </div>
+    
+    <form method='post' action='/signup' autocomplete="off">
+      <fieldset>
+        <label for="username">Create a Username: </label>
+        <input id="username" name="username" type="text" placeholder="Type your username ..." required />
+        <label for="new-password">Create a New Password: </label>
+        <input id="new-password" name="new-password" type="password" placeholder="Type your new password ..." required />
+        <label for="first-name">Enter Your First Name:</label>
+        <input id="first-name" name="first-name" type="text" placeholder="Type your first name ..." required />
+        <label for="last-name">Enter Your Last Name: </label>
+        <input id="last-name" name="last-name" type="text" placeholder="Type your last name ..." required />
+        <label for="school">Enter Your School: </label>
+        <input id="school" name="school" type="text" placeholder="Type your school ..." required />
+        <label for="age">Enter Your Age: </label>
+        <input id="age" name="age" type="number" placeholder="Type your age ..." required />
+
+        <label class="role">What type of user are you?</label>
+        <div class="choice">
+          <label for="Administrator">Administrator</label><input id="Administrator" type="radio" name="role" value="Administrator" required>
+          <label for="Operator">Operator</label><input id="Operator" type="radio" name="role" value="Operator" required>
+          <label for="Teacher">Teacher</label><input id="Teacher" type="radio" name="role" value="Teacher" required>
+          <label for="Student">Student</label><input id="Student" type="radio" name="role" value="Student" required>
+        </div>
+      </fieldset>
+      <div class="button">
+        <button type="submit" name="submit">Create Account</button>
+      </div>
+    </form>
+</body>
+</html>

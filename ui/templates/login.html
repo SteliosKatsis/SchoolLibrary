@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="../static/css/login.css" />
+    <title>Login Page</title>
+</head>
+
+<body>
+    {% if approval_status == "Pending" or approval_status == "Rejected" %}
+    <div class="flash">
+        <span class="message">Your sign up request is {{ approval_status }}</span>
+        <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    {% endif %}
+
+    <div class="header">
+        <h1>Explore an abundance of knowledge and resources on our specialized library system!</h1>
+    </div>
+
+    <div class="form">
+        <form action='/login' method='POST'>
+            <div class="labels">
+                <label for="username"><span class="inline">Username: </span><input id="username" name="username" type="text" placeholder="Username"  required /></label>
+                <label for="password"><span class="inline">Password: </span><input id="password" name="password" type="password" placeholder="Password" required /></label>
+            </div>
+
+            <div class="button">
+                <button type="submit" name="submit">Log In</button>
+            </div>
+
+            <div class="link">
+                <p>Don't have an account? Click <a href="{{ url_for('go_to_signup') }}">here</a> to sign up!</p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

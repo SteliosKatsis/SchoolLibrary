@@ -1,0 +1,122 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/library.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+body {
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    font-weight: bold;
+}
+
+.navbar {
+    top: 0;
+    background-color: black;
+    opacity: 85%;
+    border-bottom: 1px solid white;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.navbar li {
+    float: right;
+}
+
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    background-color: white;
+    color: black;
+}
+
+.form {
+    margin: 2.5rem auto;
+    background-color: black;
+    color: white;
+    opacity: 85%;
+    border-radius: 1rem;
+    width: 72%;
+    border: 1px solid white;
+}
+
+form {
+    margin: auto;
+    width: 70%;
+    height: 100%;
+
+}
+
+.labels{
+    border-bottom: 1px solid white;
+    margin-top: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.user_search {
+    margin: 1rem auto;
+    width: 60%;
+    align-items:stretch;
+    display: flex;
+    justify-content: space-between; /* Align items to the start edge horizontally */
+    align-items: center; /*Align items to the start edge vertically */
+}
+
+button[name="search"] {
+    width: 35%;
+    order: 1;
+    padding-left: 0;
+}
+
+input {
+    width: 55%;
+    order: -1;
+    padding-right: 0;
+}
+
+button[name="delayed_books"], button[name="new_loan"] {
+    margin: 1rem 0;
+    width: 60%;
+}
+
+button[name="return"] {
+    font-size: 13px;
+}
+
+button {
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+p {
+    text-align: center;
+    font-size: 24px;
+}
