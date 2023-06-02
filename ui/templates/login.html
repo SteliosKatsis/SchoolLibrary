@@ -7,7 +7,6 @@
     <link rel = "stylesheet" href="../static/css/login.css" />
     <title>Login Page</title>
 </head>
-
 <body>
     {% if approval_status == "Pending" or approval_status == "Rejected" %}
     <div class="flash">
@@ -16,25 +15,25 @@
     </div>
     {% endif %}
 
+
+
     <div class="header">
         <h1>Explore an abundance of knowledge and resources on our specialized library system!</h1>
     </div>
-
     <div class="form">
-        <form action='/login' method='POST'>
+        <form action="/login" method="POST">
             <div class="labels">
                 <label for="username"><span class="inline">Username: </span><input id="username" name="username" type="text" placeholder="Username"  required /></label>
                 <label for="password"><span class="inline">Password: </span><input id="password" name="password" type="password" placeholder="Password" required /></label>
             </div>
-
             <div class="button">
                 <button type="submit" name="submit">Log In</button>
             </div>
-
             <div class="link">
                 <p>Don't have an account? Click <a href="{{ url_for('go_to_signup') }}">here</a> to sign up!</p>
             </div>
         </form>
     </div>
+
 </body>
 </html>

@@ -12,42 +12,43 @@
     <div class="navbar">
         <nav>
             <ul class="navbar">
-                <li><a href="operator_homepage.html">Main Page</a></li>
-                <li><a href="operator_users.html">Users Info</a></li>
-                <li><a href="operator_borrowed.html">Borrowed Books</a></li>
-                <li><a href="operator_reserved.html">Reserved Books</a></li>
-                <li><a href="operator_reviews.html">Reviews</a></li>
+                <li><a href="{{ url_for('operator_homepage') }}">Main Page</a></li>
+                <li><a href="{{ url_for('approval') }}">Users Info</a></li>
+                <li><a href="{{ url_for('operator_borrowed') }}">Borrowed Books</a></li>
+                <li><a href="{{ url_for('operator_reserved') }}">Reserved Books</a></li>
+                <li><a href="{{ url_for('operator_reviews') }}">Reviews</a></li>
             </ul>
-          </nav>
+        </nav>
     </div>
 
     <div class="form">
-        <form>
-            {% if choice == 'category' %}
-                <h2>All Books based on Category: {{ name }}</h2>
-            {% elif choice == 'author' %}
-                <h2>All Books based on Author: {{ name }}</h2>
-            {% elif choice == 'copies' %}
-                <h2>All Books based on {{ name }} Available Copies</h2>
-            {% elif choice == 'title' %}
-                <h2>All Books based on Title: {{ name }}</h2>
-            {% else %}
+        <div class="f">
+            {% if choice == 'books' %}
                 <h2>All Available Books</h2>
+            {% elif choice == 'category' %}
+                <h2>All Books based on Category: {{ category }}</h2>
+            {% elif choice == 'author' %}
+                <h2>All Books based on Author: {{ author }}</h2>
+            {% elif choice == 'copies' %}
+                <h2>All Books based on {{ copies }} Available Copies</h2>
+            {% elif choice == 'title' %}
+                <h2>All Books based on Title: {{ title }}</h2>
             {% endif %}
 
             <ul class="reserved-books">
                 <!-- Loop through the reserved books data and generate list items -->
                 {% for book in books %}
                 <li>
-                    <img src="{{ book.image }}" alt="{{ book.title }}" />
+                    <img src="{{ book.img }}" alt="{{ book.title }}" />
                     <div class="book-info">
-                        <h3>{{ book.title }}</h3>
-                        <p>{{ book.author }}</p>
-                        <!-- Add other book information as needed -->                    </div>
+                        <h3>Title: {{ book.title }}</h3>
+                        <p>{{ book.publisher }}</p>
+                        <!-- Add other book information as needed -->
+                    </div>
                 </li>
                 {% endfor %}
             </ul>
-        </form>
+        </div>
     </div>
 </body>
 </html>

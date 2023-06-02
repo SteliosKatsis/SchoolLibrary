@@ -54,10 +54,6 @@ select {
     height: 2rem;
 }
 
-option {
-    padding: 10rem;
-}
-
 label {
     display: block;
 }

@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, redirect, url_for, render_template, session, flash
 import mysql.connector
 import sys
+import sqlite3
 
 app = Flask(__name__, static_folder='static')
 
@@ -13,7 +14,7 @@ def get_database_connection():
     connection = mysql.connector.connect(
     host = 'localhost',
     user = 'root',
-    password = 'Stelios.181002',
+    password = '192123George',
     database = 'website'
     )
 
@@ -29,14 +30,12 @@ def get_database_connection():
 
 @app.route('/')
 def initial():
-    # redirect to login.html
-    return render_template('login.html', approval_status = '')
+    return render_template('login.html')
 
 
 
-@app.route('/signup')
+@app.route('/go_to_signup')
 def go_to_signup():
-    # redirect to signup.html
     return render_template('signup.html')
 
 
@@ -59,7 +58,7 @@ def signup():
     # Create a cursor object to interact with the database
     cursor = connection.cursor()
 
-    args = (school, username, new_password, first_name, last_name, age, role)  # Example arguments
+    args = (school, username, new_password, first_name, last_name, age, role)
     cursor.callproc('InsertUser', args)
 
     # Commit the changes to the database
@@ -72,6 +71,7 @@ def signup():
     print("Database connection closed")
 
     return render_template('login.html')
+
 
 
 
@@ -138,7 +138,6 @@ def login():
             
         else:
             return render_template('login.html', approval_status = approval_status)
-
 
     else:
         # Redirect to a page indicating that the user is pending approval
@@ -220,6 +219,95 @@ def pending_approval_page():
 def error_page():
     # Code to render the error page
     return render_template('error.html')
+
+
+
+
+
+# Operator
+
+@app.route('/operator_homepage')
+def operator_homepage():
+    return render_template('operator_homepage.html')
+
+@app.route('/operator_books', methods=['POST'])
+def operator_books():
+    available_books = request.form.get('available_books')
+    title = request.form.get('title')
+    author = request.form.get('author')
+    copies = request.form.get('copies')
+    category = request.form.get('categories')
+    choice = request.form.get('choice')
+
+    # upper button clicked
+    if(available_books == 'books'):
+        choice =  'books'
+
+    if(choice is None):
+        return render_template('operator_homepage.html')
+    
+    # Create a new database connection for this request
+    connection = get_database_connection()
+
+    # Create a cursor object to interact with the database
+    cursor = connection.cursor()
+    
+    school_id = session.get('school_id')
+
+    if choice == 'books':
+        query = "SELECT * FROM Book WHERE school_id = %s"
+        params = [school_id]
+        cursor.execute(query, params)
+    elif choice == 'category':
+        cursor.execute("")
+    elif choice == 'author':
+        cursor.execute("")
+    elif choice == 'copies':
+        cursor.execute("")
+    elif choice == 'title':
+        cursor.execute("")
+
+    column_names = [i[0] for i in cursor.description]
+    books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    cursor.close()
+
+    print(books)
+
+    return render_template(
+        'operator_books.html', 
+        choice = choice, 
+        title = title, 
+        author = author, 
+        copies = copies, 
+        category = category,
+        books = books
+    )
+
+@app.route('/operator_borrowed')
+def operator_borrowed():
+    return render_template('operator_borrowed.html')
+
+@app.route('/operator_reserved')
+def operator_reserved():
+    return render_template('operator_reserved.html')
+
+@app.route('/approval')
+def approval():
+    return render_template('approval.html')
+
+@app.route('/operator_reviews')
+def operator_reviews():
+    return render_template('operator_reviews.html')
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

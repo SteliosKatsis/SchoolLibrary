@@ -12,27 +12,27 @@
     <div class="navbar">
         <nav>
             <ul class="navbar">
-                <li><a href="operator_homepage.html">Main Page</a></li>
-                <li><a href="operator_users.html">Users Info</a></li>
-                <li><a href="operator_borrowed.html">Borrowed Books</a></li>
-                <li><a href="operator_reserved.html">Reserved Books</a></li>
-                <li><a href="operator_reviews.html">Reviews</a></li>
+                <li><a href="{{ url_for('operator_homepage') }}">Main Page</a></li>
+                <li><a href="{{ url_for('approval') }}">Users Info</a></li>
+                <li><a href="{{ url_for('operator_borrowed') }}">Borrowed Books</a></li>
+                <li><a href="{{ url_for('operator_reserved') }}">Reserved Books</a></li>
+                <li><a href="{{ url_for('operator_reviews') }}">Reviews</a></li>
             </ul>
-          </nav>
+        </nav>
     </div>
 
     <div class="form">
-        <form>
+        <form action="/operator_books", method="POST">
             <div class="labels">
-                <button class="books" type="submit" name="available_books">See All Available Books</button><br>
+                <button class="books" type="submit" name="available_books" value="books">See All Available Books</button><br>
 
-                <input name="title" type="text" placeholder="Search by Book Title">
+                <input type="text" name="title" placeholder="Search by Book Title">
                 <input type="radio" name="choice" value="title"><br>
 
-                <input name="author" type="text" placeholder="Search by Book Author">
+                <input type="text" name="author" placeholder="Search by Book Author">
                 <input type="radio" name="choice" value="author"><br>
 
-                <input name="copies" type="text" placeholder="Search by Available Copies">
+                <input type="text" name="copies"placeholder="Search by Available Copies">
                 <input type="radio" name="choice" value="copies"><br>
 
                 <select name="categories">
@@ -44,7 +44,7 @@
             </div>
 
             <div class="search">
-                <button class="search" type="submit" name="search">Search</button>
+                <button class="search" type="submit" name="search" value="search">Search</button>
             </div>
         </form>
     </div>

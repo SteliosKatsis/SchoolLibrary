@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "../static/css/admin_home.css" />
+    <title>Administrator Home Page</title>
+</head>
+<body>
+    <div class="query 1">
+        <h3>List with the total number of loans per school</h3>
+        
+        <label for="search">Search by?
+            <select id="search" name="search">
+                <option value="Year">Year</option>
+                <option value="Month">Month</option>
+            </select>
+        </label>
+
+
+        <div class="school_loans">
+        {% for school in schools %}
+            <p>{{ school_name }} has {{ total_loans }} loans.</p>
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="query 3">
+        <h3>Young teachers (age less than 40 years) who have borrowed the most books and the number of books</h3>
+
+        <div class="user">
+            {% for teacher in teachers %}
+                <p>{{ teacher_name }} has borrowed {{ total_books }} books.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="query 4">
+        <h3>Authors whose books have not been borrowed</h3>
+
+        <div class="user">
+            {% for author in authors %}
+                <p>{{ author_name }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="query 5">
+        <h3>Operators who have loaned the same number of books in a year, having more than 20 loans</h3>
+
+        <div class="user">
+            {% for operator in operators %}
+                <p>{{ operator_name }} has loaned {{ total_loans }} books.</p> <!--The loans they have approved (status Borrowed/Returned)-->
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="query 6">
+        <h3>Top-3 pairs of categories that appeared most in borrowings</h3>
+
+        <div class="user">
+            {% for category_pair in category_pairs %}
+                <p>{{ category_1 }} and {{ category_2 }} appear together the most.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="query 7">
+        <h3>All authors who have written at least 5 books less than the author with the most books.</h3>
+
+        <div class="user">
+            <p>{{ author_with_most_books }} has written {{ most_books }} books (most).</p>
+            {% for author in authors %}
+                <p>{{ author_name }} has written {{ total_books }} books.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+</body>
+</html>
