@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "../static/css/operator_borrowed_delayed.css" />
+    <title>Operator Delayed Books Page</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <nav>
+            <ul class="navbar">
+                <li><a href="operator_homepage.html">Main Page</a></li>
+                <li><a href="operator_users.html">Users Info</a></li>
+                <li><a href="operator_borrowed.html">Borrowed Books</a></li>
+                <li><a href="operator_reserved.html">Reserved Books</a></li>
+                <li><a href="operator_reviews.html">Reviews</a></li>
+            </ul>
+          </nav>
+    </div>
+
+    <div class="form">
+        <form>
+            <div class="labels">
+                <div class="input1">
+                    <input name="first_name" type="text" placeholder="Search by User First Name">
+                    <input type="radio" name="choice" value="first_name"><br>
+                </div>
+
+                <div class="input2">
+                    <input name="last_name" type="text" placeholder="Search by User Last Name">
+                    <input type="radio" name="choice" value="last_name"><br>
+                </div>
+                
+                <div class="input3">
+                    <input name="copies" type="number" placeholder="Search by Number of Delayed Days">
+                    <input type="radio" name="choice" value="copies"><br>
+                </div>
+
+                <div class="search">
+                    <button type="submit" name="search">Search</button>
+                </div>
+            </div>
+
+            <h2>Pending Reviews</h2>
+            <ul class="delayed">
+                {% for loan in delayed %}
+                <li>
+                    <h4>{{ loan.first_name }} {{ loan.last_name }}</h4>
+                    <p>Username: {{ loan.username }}</p><br>
+                    <p>Age: {{ loan.age }}</p><br>
+                    <p>Role: {{ loan.role }}</p><br>
+                    <p>Loan Date:  {{ loan.loan_date }}</p><br>
+                    <p>Number of Delayed Days:  {{ loan.delayed_days }}</p><br>
+                </li>
+                {% endfor %}
+            </ul>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

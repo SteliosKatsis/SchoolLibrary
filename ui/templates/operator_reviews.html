@@ -44,16 +44,16 @@
             <h2>Pending Reviews</h2>
             <ul class="pending">
                 {% for user in pending_users %}
-                <li>
-                    <h4>{{ first_name }} {{ last_name }}</h4>
-                    <p>Username: {{ username }}</p><br>
-                    <p>Age: {{ age }}</p><br>
-                    <p>Role: {{ role }}</p><br>
-                    <p>Rating:  {{ rating }}</p><br>
-                    <p>Comment:  {{ comment }}</p><br>
-                    <button name="approve">Approve</button>
-                    <button name="decline">Decline</button>
-                </li>
+                    <li>
+                        <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                        <p>Username: {{ user.username }}</p><br>
+                        <p>Age: {{ user.age }}</p><br>
+                        <p>Role: {{ user.role }}</p><br>
+                        <p>Rating:  {{ user.rating }}</p><br>
+                        <p>Comment:  {{ user.comment }}</p><br>
+                        <button name="approve">Approve</button>
+                        <button name="decline">Decline</button>
+                    </li>
                 {% endfor %}
             </ul>
         </form>
