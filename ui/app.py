@@ -2,7 +2,6 @@ import os
 from flask import Flask, request, redirect, url_for, render_template, session, flash
 import mysql.connector
 import sys
-import sqlite3
 
 app = Flask(__name__, static_folder='static')
 
@@ -12,10 +11,10 @@ app.secret_key = secret_key
 
 def get_database_connection():
     connection = mysql.connector.connect(
-    host = 'localhost',
-    user = 'root',
-    password = '192123George',
-    database = 'website'
+        host = 'localhost',
+        user = 'root',
+        password = 'Stelios.181002',
+        database = 'website'
     )
 
     if connection.is_connected():
@@ -23,18 +22,25 @@ def get_database_connection():
     else:
         print("Connection failed")
         sys.exit(1)
-
+        
     return connection
 
 
+# ------------------------Login-------------------------- #
 
 @app.route('/')
 def initial():
+    return redirect(url_for('go_to_login'))
+
+
+
+@app.route('/login')
+def go_to_login():
     return render_template('login.html')
 
 
 
-@app.route('/go_to_signup')
+@app.route('/signup')
 def go_to_signup():
     return render_template('signup.html')
 
@@ -42,7 +48,6 @@ def go_to_signup():
 
 @app.route('/signup', methods = ['POST'])
 def signup():
-
     # Create a new database connection for this request
     connection = get_database_connection()
 
@@ -70,8 +75,7 @@ def signup():
     connection.close()
     print("Database connection closed")
 
-    return render_template('login.html')
-
+    return redirect(url_for('go_to_login'))
 
 
 
@@ -120,7 +124,7 @@ def login():
 
             if role == 'Administrator':
                 # Redirect to the administrator page
-                return render_template('administrator.html')
+                return redirect(url_for('admin'))
 
             query = "SELECT school_name FROM School WHERE school_id = %s"
             params = [school_id]
@@ -131,10 +135,10 @@ def login():
             
             if role == 'Operator':
                 # Redirect to the operator page
-                return render_template('operator_homepage.html')
+                return redirect(url_for('operator_homepage'))
             
             else:
-                return render_template('home.html')
+                return redirect(url_for('user'))
             
         else:
             return render_template('login.html', approval_status = approval_status)
@@ -142,9 +146,21 @@ def login():
     else:
         # Redirect to a page indicating that the user is pending approval
         return redirect(url_for('pending_approval_page'))
+    
+    
+    
+@app.route('/user_homepage')
+def user():
+    return render_template('home.html')
 
 
 
+@app.route('/admin_homepage')
+def admin():
+    return render_template('administrator.html')
+
+
+# ----------------------------User----------------------------------- #
 
 @app.route('/edit_personal_info')
 def edit_personal_info():
@@ -158,8 +174,6 @@ def edit_personal_info():
         school_name = session.get('school_name'),
         role = session.get('role')
         )
-
-
 
 
 
@@ -179,7 +193,8 @@ def update_info():
     # Create a cursor object to interact with the database
     cursor = connection.cursor()
 
-    cursor.callproc('UpdateUser', (user_id, new_school, new_username, new_password, new_first_name, new_last_name))
+    cursor.callproc('UpdateUser',
+    (user_id, new_school, new_username, new_password, new_first_name, new_last_name))
 
     # Commit the changes to the database
     connection.commit()
@@ -197,6 +212,152 @@ def update_info():
     return render_template('home.html', message = my_message)
 
 
+# --------------------------Operator--------------------------------- #
+
+@app.route('/operator_homepage')
+def operator_homepage():
+    return render_template('operator_homepage.html')
+
+
+
+@app.route('/operator_books', methods=['POST'])
+def operator_books():
+    available_books = request.form.get('available_books')   # button press
+    title = request.form.get('title')
+    author = request.form.get('author')
+    copies = request.form.get('copies')
+    category = request.form.get('categories')
+    choice = request.form.get('choice')
+    
+    school_id = session.get('school_id')
+
+    # Upper button clicked
+    if(available_books == 'books'):
+        choice =  'books'
+
+    # Nothing pressed
+    if(choice is None):
+        return redirect(url_for('operator_homepage'))
+    
+    # Create a new database connection for this request
+    connection = get_database_connection()
+
+    # Create a cursor object to interact with the database
+    cursor = connection.cursor()
+
+    if choice == 'books':
+        query = "SELECT * FROM Book WHERE school_id = %s"
+        params = [school_id]
+        cursor.execute(query, params)
+    elif choice == 'category':
+        query = "SELECT * FROM Book JOIN Category ON Category.book_id = Book.book_id WHERE school_id = %s AND category_name = %s"
+        params = [school_id, category]
+        cursor.execute(query, params)
+    elif choice == 'author':
+        query = "SELECT * FROM Book JOIN Author ON Author.book_id = Book.book_id WHERE school_id = %s AND author_name = %s"
+        params = [school_id, author]
+        cursor.execute(query, params)
+    elif choice == 'copies':
+        query = "SELECT * FROM Book WHERE school_id = %s AND available_copies = %s"
+        params = [school_id, copies]
+        cursor.execute(query, params)
+    elif choice == 'title':
+        query = "SELECT * FROM Book WHERE school_id = %s AND title = %s"
+        params = [school_id, title]
+        cursor.execute(query, params)
+
+    column_names = [i[0] for i in cursor.description]
+    books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    cursor.close()
+    
+    # cursor = connection.cursor()
+    # query = "SELECT Author.author_name FROM Book JOIN Author ON Author.book_id = Book.book_id WHERE school_id = %s"
+    # params = [school_id]
+    # cursor.execute(query, params)
+    # print(cursor.fetchall())
+    # cursor.close()
+
+    return render_template('operator_books.html',
+    choice = choice, title = title, author = author, copies = copies, category = category, books = books)
+
+
+
+@app.route('/operator_borrowed')
+def operator_borrowed():    
+    school_id = session.get('school_id')
+    
+    # Create a new database connection for this request
+    connection = get_database_connection()
+
+    # Create a cursor object to interact with the database
+
+    cursor = connection.cursor()
+    query = """SELECT b.*, r.loan_date, r.return_date, r.return_date > NOW()
+    AS del FROM (Reservation AS r) JOIN (Book AS b) ON r.book_id=b.book_id
+    WHERE b.school_id = %s AND (r.reservation_status = 'Borrowed' OR r.reservation_status='Delayed')"""
+    params = [school_id]
+    cursor.execute(query, params)
+    column_names = [i[0] for i in cursor.description]
+    books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    cursor.close()
+
+    return render_template('operator_borrowed.html', books = books)
+
+
+
+@app.route('/operator_reserved')
+def operator_reserved():
+    return render_template('operator_reserved.html')
+
+
+
+@app.route('/approval')
+def approval():
+    return render_template('approval.html')
+
+
+
+@app.route('/operator_reviews')
+def operator_reviews():
+    school_id = session.get('school_id')
+    
+    connection = get_database_connection()
+    cursor = connection.cursor()
+    query = """SELECT u.*, r.comment, r.rating, r.review_id FROM (Review AS r)
+    JOIN (User AS u) ON u.user_id=r.user_id WHERE u.school_id = %s
+    AND r.approval_status = 'Pending'"""
+    params = [school_id]
+    cursor.execute(query, params)
+    column_names = [i[0] for i in cursor.description]
+    pending = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    cursor.close()
+    
+    return render_template('operator_reviews.html', pending_users = pending)
+
+@app.route('/operator_reviews', methods=['POST'])
+def operator_reviews_new():
+    approval = request.form.get('approve')
+    decline = request.form.get('decline')
+    
+    connection = get_database_connection()
+    cursor = connection.cursor()
+    
+    review_id = 0
+    if(approval is not None):
+        review_id = approval
+        query = "UPDATE Review SET approval_status = 'Approved' WHERE review_id = %s"
+    elif(decline is not None):
+        review_id = decline
+        query = "UPDATE Review SET approval_status = 'Rejected' WHERE review_id = %s"
+    
+    params = [review_id]
+    cursor.execute(query, params)
+    cursor.close()
+    
+    return redirect(url_for('operator_reviews'))
+
+
+# ----------------------Error Pages------------------ #
 
 @app.route('/logout')
 def logout():
@@ -221,94 +382,7 @@ def error_page():
     return render_template('error.html')
 
 
-
-
-
-# Operator
-
-@app.route('/operator_homepage')
-def operator_homepage():
-    return render_template('operator_homepage.html')
-
-@app.route('/operator_books', methods=['POST'])
-def operator_books():
-    available_books = request.form.get('available_books')
-    title = request.form.get('title')
-    author = request.form.get('author')
-    copies = request.form.get('copies')
-    category = request.form.get('categories')
-    choice = request.form.get('choice')
-
-    # upper button clicked
-    if(available_books == 'books'):
-        choice =  'books'
-
-    if(choice is None):
-        return render_template('operator_homepage.html')
-    
-    # Create a new database connection for this request
-    connection = get_database_connection()
-
-    # Create a cursor object to interact with the database
-    cursor = connection.cursor()
-    
-    school_id = session.get('school_id')
-
-    if choice == 'books':
-        query = "SELECT * FROM Book WHERE school_id = %s"
-        params = [school_id]
-        cursor.execute(query, params)
-    elif choice == 'category':
-        cursor.execute("")
-    elif choice == 'author':
-        cursor.execute("")
-    elif choice == 'copies':
-        cursor.execute("")
-    elif choice == 'title':
-        cursor.execute("")
-
-    column_names = [i[0] for i in cursor.description]
-    books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
-    cursor.close()
-
-    print(books)
-
-    return render_template(
-        'operator_books.html', 
-        choice = choice, 
-        title = title, 
-        author = author, 
-        copies = copies, 
-        category = category,
-        books = books
-    )
-
-@app.route('/operator_borrowed')
-def operator_borrowed():
-    return render_template('operator_borrowed.html')
-
-@app.route('/operator_reserved')
-def operator_reserved():
-    return render_template('operator_reserved.html')
-
-@app.route('/approval')
-def approval():
-    return render_template('approval.html')
-
-@app.route('/operator_reviews')
-def operator_reviews():
-    return render_template('operator_reviews.html')
-
-
-
-
-
-
-
-
-
-
-
+# ----------------------Run-------------------------- #
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
