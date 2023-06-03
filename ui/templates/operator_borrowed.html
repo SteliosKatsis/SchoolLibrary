@@ -25,27 +25,38 @@
         <form>
             <div class="labels">
                 <div class="user_search">
-                    <input type="text" name="user_loans" placeholder="Search by user">
-                    <button type="submit" name="search">Search</button><br>
+                    <form action="/operator_borrowed_user", method="POST">
+                        <input type="text" name="user_loans" placeholder="Search by user">
+                        <button type="submit" name="search" value="user">Search</button><br>
+                    </form>
                 </div>
 
-                <button type="submit" name="delayed_books">See delayed books</button><br>
-
-                <button type="submit" name="new_loan">Make a Loan</button><br>              
+                <form action="/operator_borrowed_delayed", method="POST">
+                    <button type="submit" name="delayed_books" value="delayed">See delayed books</button><br>
+                </form>
+                
+                <form action="/operator_borrowed_new", method="POST">
+                    <button type="submit" name="new_loan" value="new">Make a Loan</button><br>
+                </form>   
             </div>
 
             <div>
-                <p>All Borrowed Books</p>
+                <h2>All Borrowed Books</h2>
                 <ul class="books">
                     <!-- Loop through the borrowed books data and generate list items -->
                     {% for book in borrowed_books %}
                     <li>
-                        <img src="{{ book.image }}" alt="{{ book.title }}" />
+                        <img src="{{ book.img }}" alt="{{ book.title }}" />
                         <div class="book-info">
-                            <h2>{{ book.title }}</h2>
-                            <h5>{{ book.author }}</h5>
-                            <!-- Add other book information as needed -->
-                            <button type="submit" name="return">Return Book</button>
+                            <h3>Title: {{ book.title }}</h3>
+                            <p>Isbn: {{ book.isbn }}</p>
+                            <p>Publisher: {{ book.publisher }}</p>
+                            <p>Number of Pages: {{ book.number_of_pages }}</p>
+                            <p>Summary: {{ book.summary }}</p>
+                            <p>Available Copies: {{ book.available_copies }}</p>
+                            <p>Loan Date: {{ book.loan_date }}</p>
+                            <p>Return Date: {{ book.return.date }}</p>
+                            <p>Delayed: {% if book.del %} Yes {% else %} No {% endif %} </p>
                         </div>
                     </li>
                     {% endfor %}

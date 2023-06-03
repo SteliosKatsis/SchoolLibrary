@@ -22,7 +22,7 @@
     </div>
 
     <div class="form">
-        <form>
+        <form action="/operator_reviews" method="POST">
             <h2>Review Average based on Category</h2>
             <ul class="category">
                 {% for category, review in category_average %}
@@ -34,7 +34,7 @@
 
             <h2>Review Average based on Users</h2>
             <ul class="user">
-                {% for first_name, last_name, review in category_average %}
+                {% for first_name, last_name, review in user_average %}
                 <li>
                     <p>{{first_name}} {{last_name}}:  {{review}}</p>
                 </li>
@@ -51,8 +51,8 @@
                         <p>Role: {{ user.role }}</p><br>
                         <p>Rating:  {{ user.rating }}</p><br>
                         <p>Comment:  {{ user.comment }}</p><br>
-                        <button name="approve">Approve</button>
-                        <button name="decline">Decline</button>
+                        <button name="approve" value="{{ user.review_id }}">Approve</button>
+                        <button name="decline" value="{{ user.review_id }}">Decline</button>
                     </li>
                 {% endfor %}
             </ul>

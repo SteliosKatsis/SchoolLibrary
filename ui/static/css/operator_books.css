@@ -81,6 +81,15 @@ h2 {
 }
 
 img {
-    height: 100px;
-    width: 60px;
+    height: 200px;
+}
+
+.book li {
+    border-bottom: 1px solid white;
+    list-style-type: none;
+    margin-bottom: 2rem;
+}
+
+p {
+    text-align: justify;
 }

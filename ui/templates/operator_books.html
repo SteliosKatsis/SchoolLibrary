@@ -35,15 +35,18 @@
                 <h2>All Books based on Title: {{ title }}</h2>
             {% endif %}
 
-            <ul class="reserved-books">
+            <ul class="book">
                 <!-- Loop through the reserved books data and generate list items -->
                 {% for book in books %}
                 <li>
                     <img src="{{ book.img }}" alt="{{ book.title }}" />
                     <div class="book-info">
                         <h3>Title: {{ book.title }}</h3>
-                        <p>{{ book.publisher }}</p>
-                        <!-- Add other book information as needed -->
+                        <p>Isbn: {{ book.isbn }}</p>
+                        <p>Publisher: {{ book.publisher }}</p>
+                        <p>Number of Pages: {{ book.number_of_pages }}</p>
+                        <p>Summary: {{ book.summary }}</p>
+                        <p>Available Copies: {{ book.available_copies }}</p>
                     </div>
                 </li>
                 {% endfor %}
