@@ -10,83 +10,101 @@
 <body>
     <div class="header">
         <h1>Change your Personal Information</h1>
-        <h2>Studetnts can only change their password, while teachers all of their info</h2>
-    </div>
 
-  <form action="{{ url_for('update_info') }}" method="POST">
-    <fieldset>
         {% if role == 'Student' %}
-        <!-- Display current values for readonly fields -->
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="{{ username }}" readonly>
-
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password" value="{{ password }}" required>
-
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="first-name" value="{{ first_name }}" readonly>
-
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="last-name" value="{{ last_name }}" readonly>
-
-        <label for="school">School:</label>
-        <input type="text" id="school" name="school" value="{{ school_name }}" readonly>
+        <h2>As a Student you can only change their password</h2>
 
         {% elif role == 'Teacher' %}
-        <!-- Allow changing values for all fields -->
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="{{ username }}" required>
-
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password" value="{{ password }}" required>
-
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="first-name" value="{{ first_name }}" required>
-
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="last-name" value="{{ last_name }}" required>
-
-        <label for="school">School:</label>
-        <input type="text" id="school" name="school" value="{{ school_name }}" required>
-        {% endif %}
-
-        {% elif role == 'Administrator' %}
-        <!-- Allow changing values for all fields -->
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="{{ username }}" required>
-
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password" value="{{ password }}" required>
-
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="first-name" value="{{ first_name }}" required>
-
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="last-name" value="{{ last_name }}" required>
-        {% endif %}
+        <h2>As a Teacher you can change all your info</h2>
 
         {% elif role == 'Operator' %}
-        <!-- Allow changing values for all fields -->
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="{{ username }}" required>
+        <h2>As an Operator you can change all your info except for your school</h2>
 
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password" value="{{ password }}" required>
-
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="first-name" value="{{ first_name }}" required>
-
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="last-name" value="{{ last_name }}" required>
-
-        <label for="school">School:</label>
-        <input type="text" id="school" name="school" value="{{ school_name }}" readonly>
+        {% elif role == 'Administrator' %}
+        <h2>As an Administrator you can change all of your info</h2>
         {% endif %}
-
-    </fieldset>
-    <div class="button">
-        <button type="submit" name="submit">Update Info</button>
     </div>
-  </form>
+
+
+    <form action="{{ url_for('update_info') }}" method="POST">
+        <fieldset>
+            {% if role == 'Student' %}
+            <!-- Display current values for readonly fields -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ username }}" readonly>
+
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" value="{{ password }}" required>
+
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="first-name" value="{{ first_name }}" readonly>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="last-name" value="{{ last_name }}" readonly>
+
+            <label for="school">School:</label>
+            <input type="text" id="school" name="school" value="{{ school_name }}" readonly>
+
+
+            {% elif role == 'Teacher' %}
+            <!-- Allow changing values for all fields -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ username }}" required>
+
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" value="{{ password }}" required>
+
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="first-name" value="{{ first_name }}" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="last-name" value="{{ last_name }}" required>
+
+            <label for="school">School:</label>
+            <input type="text" id="school" name="school" value="{{ school_name }}" required>
+
+
+            {% elif role == 'Administrator' %}
+            <!-- Allow changing values for all fields -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ username }}" required>
+
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" value="{{ password }}" required>
+
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="first-name" value="{{ first_name }}" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="last-name" value="{{ last_name }}" required>
+
+
+            {% elif role == 'Operator' %}
+            <!-- Allow changing values for all fields -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ username }}" required>
+
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" value="{{ password }}" required>
+
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="first-name" value="{{ first_name }}" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="last-name" value="{{ last_name }}" required>
+
+            <label for="school">School:</label>
+            <input type="text" id="school" name="school" value="{{ school_name }}" readonly>
+            {% endif %}
+        </fieldset>
+        <div class="button">
+            <button type="submit" name="submit">Update Info</button>
+        </div>
+    </form>
+
+
+    
+    
+
 </body>
 </html>

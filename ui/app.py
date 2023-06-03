@@ -124,7 +124,7 @@ def login():
 
             if role == 'Administrator':
                 # Redirect to the administrator page
-                return redirect(url_for('admin'))
+                return redirect(url_for('admin_home'))
 
             query = "SELECT school_name FROM School WHERE school_id = %s"
             params = [school_id]
@@ -155,11 +155,6 @@ def user():
 
 
 
-@app.route('/admin_homepage')
-def admin():
-    return render_template('administrator.html')
-
-
 # ----------------------------User----------------------------------- #
 
 @app.route('/edit_personal_info')
@@ -186,6 +181,7 @@ def update_info():
     new_first_name = request.form.get('first-name')
     new_last_name = request.form.get('last-name')
     new_school = request.form.get('school')
+    role = session.get('role')
 
     # Create a new database connection for this request
     connection = get_database_connection()
@@ -204,12 +200,32 @@ def update_info():
     connection.close()
     print("Database connection closed")
 
-    my_message = "User info has been updated successfully."
 
-    # Redirect to the home page or appropriate page after updating personal information
-    # return redirect(url_for('home_page'))
+    # Store the new information
+    session['username'] = new_username
+    session['password'] = new_password
+    session['first_name'] = new_first_name
+    session['last_name'] = new_last_name
+
+    my_message = "Your info have been updated successfully."
+
+    if role == 'Administrator':
+        return render_template('admin_home.html', message = my_message)
+    
+    elif role == 'Operator':
+        return render_template('operator_homepage.html', message = my_message)
+    
+    elif role == 'Teacher':
+        session['school_name'] = new_school
+        query = "SELECT school_id FROM School WHERE school_name = %s"
+        params = [new_school]
+        cursor.execute(query, params)
+        res = cursor.fetchone()
+        session['school_id'] = res[0]
 
     return render_template('home.html', message = my_message)
+
+
 
 
 # --------------------------Operator--------------------------------- #
@@ -295,8 +311,7 @@ def operator_borrowed():
     query = """SELECT b.*, r.loan_date, r.return_date, r.return_date > NOW()
     AS del FROM (Reservation AS r) JOIN (Book AS b) ON r.book_id=b.book_id
     WHERE b.school_id = %s AND (r.reservation_status = 'Borrowed' OR r.reservation_status='Delayed')"""
-    params = [school_id]
-    cursor.execute(query, params)
+    cursor.execute(query, [school_id])
     column_names = [i[0] for i in cursor.description]
     books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
     cursor.close()
@@ -313,7 +328,8 @@ def operator_reserved():
 
 @app.route('/approval')
 def approval():
-    return render_template('approval.html')
+    role = session.get('role')
+    return render_template('approval.html', role = role)
 
 
 
@@ -339,9 +355,6 @@ def operator_reviews_new():
     approval = request.form.get('approve')
     decline = request.form.get('decline')
     
-    connection = get_database_connection()
-    cursor = connection.cursor()
-    
     review_id = 0
     if(approval is not None):
         review_id = approval
@@ -349,7 +362,9 @@ def operator_reviews_new():
     elif(decline is not None):
         review_id = decline
         query = "UPDATE Review SET approval_status = 'Rejected' WHERE review_id = %s"
-    
+        
+    connection = get_database_connection()
+    cursor = connection.cursor()
     params = [review_id]
     cursor.execute(query, params)
     cursor.close()
@@ -380,6 +395,115 @@ def pending_approval_page():
 def error_page():
     # Code to render the error page
     return render_template('error.html')
+
+
+
+
+# --------------------- Administrator --------------------------- #
+@app.route('/backup_restore')
+def backup_restore():
+    return render_template('admin_backup_restore.html')
+
+
+@app.route('/admin_home')
+def admin_home():
+    return render_template('admin_home.html')
+
+
+@app.route('/admin_schools')
+def admin_schools():
+    # Create a new database connection for this request
+    connection = get_database_connection()
+
+    # Create a cursor object to interact with the database
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM School")
+
+    column_names = [i[0] for i in cursor.description]
+    schools = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    session['schools'] = schools
+    cursor.close()
+    return render_template('admin_schools.html', schools = schools)
+
+
+@app.route('/admin_schools_edit', methods=['POST'])
+def edit_school_info():
+    update = request.form.get('update')
+    delete = request.form.get('delete')
+    
+    school_id = 0
+    if(update is not None):
+        school_id = int(update)
+        session['school_id'] = school_id
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM School WHERE school_id = %s", (school_id,))
+        result = cursor.fetchone()
+        
+        
+        return render_template('admin_schools_change.html',
+            school_name = result[1],
+            address = result[2],
+            city = result[3],
+            phone = result[4],
+            email = result[5],
+            director_name = result[6],
+            update = int(update),
+            schools = session.get('schools')
+            )
+    
+    elif(delete is not None):
+        school_id = delete
+        return redirect(url_for)
+        
+        
+
+@app.route('/update_school_info', methods=['POST'])
+def update_school_info():
+    school_id = session.get('school_id')
+    new_school_name = request.form.get('school_name')
+    new_address = request.form.get('address')
+    new_city = request.form.get('city')
+    new_phone = request.form.get('phone')
+    new_email = request.form.get('email')
+    new_director_name = request.form.get('director_name')
+
+    # Create a new database connection for this request
+    connection = get_database_connection()
+
+    # Create a cursor object to interact with the database
+    cursor = connection.cursor()
+
+    cursor.callproc('UpdateSchool',
+    (school_id, new_school_name, new_address, new_city, new_phone, new_email, new_director_name))
+    
+    cursor.execute("SELECT * FROM School")
+
+    column_names = [i[0] for i in cursor.description]
+    new_schools = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    session['schools'] = new_schools
+
+    # Commit the changes to the database
+    connection.commit()
+
+    # Close the cursor and database connection
+    cursor.close()
+    connection.close()
+    print("Database connection closed")
+
+
+    # Store the new information
+    session['school_name'] = new_school_name
+    session['address'] = new_address
+    session['city'] = new_city
+    session['phone'] = new_phone
+    session['email'] = new_email
+    session['director_name'] = new_director_name
+
+    my_message = "Your info have been updated successfully."
+
+    return render_template('admin_schools.html', message = my_message, schools = session.get('schools'))
 
 
 # ----------------------Run-------------------------- #

@@ -13,10 +13,11 @@
         <nav>
             <ul class="navbar">
                 <li><a href="{{ url_for('operator_homepage') }}">Main Page</a></li>
-                <li><a href="{{ url_for('approval') }}">Users Info</a></li>
+                <li><a href="{{ url_for('approval') }}">Users</a></li>
                 <li><a href="{{ url_for('operator_borrowed') }}">Borrowed Books</a></li>
                 <li><a href="{{ url_for('operator_reserved') }}">Reserved Books</a></li>
                 <li><a href="{{ url_for('operator_reviews') }}">Reviews</a></li>
+                <li><a href="{{ url_for('edit_personal_info') }}">Change Info</a></li>
             </ul>
         </nav>
     </div>
@@ -56,7 +57,7 @@
                             <p>Available Copies: {{ book.available_copies }}</p>
                             <p>Loan Date: {{ book.loan_date }}</p>
                             <p>Return Date: {{ book.return.date }}</p>
-                            <p>Delayed: {% if book.del %} Yes {% else %} No {% endif %} </p>
+                            <p>Delayed: {% if book.del %} Yes {% else %} No {% endif %}</p>
                         </div>
                     </li>
                     {% endfor %}

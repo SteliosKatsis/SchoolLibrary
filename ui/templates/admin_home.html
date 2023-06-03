@@ -8,6 +8,27 @@
     <title>Administrator Home Page</title>
 </head>
 <body>
+    {% if message %}
+    <div class="flash">
+        <span class="message">{{ message }}</span>
+        <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    {% endif %}
+    
+    <div class="navbar">
+        <nav>
+            <ul class="navbar">
+                <li><a href="{{ url_for('admin_home') }}">Main Page</a></li>
+                <li><a href="{{ url_for('approval') }}">Operators</a></li>
+                <li><a href="{{ url_for('backup_restore') }}">Backup-Restore</a></li>
+                <li><a href="{{ url_for('admin_schools') }}">Schools</a></li>
+                <li><a href="{{ url_for('edit_personal_info') }}">Change Info</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+
     <div class="query 1">
         <h3>List with the total number of loans per school</h3>
         

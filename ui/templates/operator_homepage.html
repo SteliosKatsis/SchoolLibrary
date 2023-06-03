@@ -9,14 +9,21 @@
 </head>
 
 <body>
+    {% if message %}
+    <div class="flash">
+        <span class="message">{{ message }}</span>
+        <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    {% endif %}
     <div class="navbar">
         <nav>
             <ul class="navbar">
                 <li><a href="{{ url_for('operator_homepage') }}">Main Page</a></li>
-                <li><a href="{{ url_for('approval') }}">Users Info</a></li>
+                <li><a href="{{ url_for('approval') }}">Users</a></li>
                 <li><a href="{{ url_for('operator_borrowed') }}">Borrowed Books</a></li>
                 <li><a href="{{ url_for('operator_reserved') }}">Reserved Books</a></li>
                 <li><a href="{{ url_for('operator_reviews') }}">Reviews</a></li>
+                <li><a href="{{ url_for('edit_personal_info') }}">Change Info</a></li>
             </ul>
         </nav>
     </div>

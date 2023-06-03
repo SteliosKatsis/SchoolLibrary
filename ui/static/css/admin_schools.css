@@ -84,7 +84,7 @@ img {
     height: 200px;
 }
 
-.book li {
+.school li {
     border-bottom: 1px solid white;
     list-style-type: none;
     margin-bottom: 2rem;
@@ -101,11 +101,36 @@ button {
     color: white;
     border: 2px solid white;
     margin-bottom: 1rem;
-    width: 11%;
-    height: 25px;
 }
 
 button:hover {
     background-color: white;
     color: black;
+}
+
+.flash {
+    position: relative;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+    height: 3rem;
+    width: 100%;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.message {
+    color: white;
+    font-size: 1.5rem;
 }

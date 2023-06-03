@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "../static/css/admin_schools_change.css" />
+    <title>Document</title>
+</head>
+<body>
+    {% if message %}
+    <<div class="flash">
+        <span class="message">{{ message }}</span>
+        <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>>
+    {% endif %}
+
+    <form action="{{ url_for('update_school_info') }}" method="POST">
+        <fieldset>
+            {% if update > 0 %}
+            <label for="school_name">School name:</label>
+            <input type="text" id="school_name" name="school_name" value="{{ school_name }}" required>
+    
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="{{ address }}" required>
+    
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="{{ city }}" required>
+    
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" value="{{ phone }}" required>
+    
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="{{ email }}" required>
+
+            <label for="director_name">Director:</label>
+            <input type="text" id="director_name" name="director_name" value="{{ director_name }}" required>
+
+            {% endif %}
+        </fieldset>
+        <div class="button">
+            <button type="submit" name="submit">Update Info</button>
+        </div>
+    </form>
+</body>
+</html>
