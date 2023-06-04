@@ -57,6 +57,18 @@ BEGIN
 END //
 
 
+
+-- DEACTIVATE USER
+
+CREATE PROCEDURE DeactivateUser(IN p_user_id INT)
+BEGIN
+	UPDATE USER
+    SET approval_status = 'Pending'
+    WHERE user_id = p_user_id;
+END //
+
+
+
 -- UPDATE RESERVATION
 
 CREATE PROCEDURE UpdateReservation(IN p_reservation_id INT)
@@ -87,7 +99,7 @@ BEGIN
         FROM Book
         WHERE book_id=v_book_id;
         
-		UPDATE Books
+		UPDATE Book
         SET available_copies = @v_available_copies + 1
         WHERE book_id=v_book_id;
 	END IF;
@@ -115,6 +127,28 @@ BEGIN
 	UPDATE Reservation
     SET reservation_status = 'Returned'
     WHERE reservation_id = p_reservation_id;
+END //
+
+
+
+-- APROVE REVIEW
+
+CREATE PROCEDURE ApproveReview(IN p_review_id INT)
+BEGIN
+	UPDATE Review
+    SET approval_status = 'Approved'
+    WHERE review_id = p_review_id;
+END //
+
+
+
+-- REJECT REVIEW
+
+CREATE PROCEDURE RejectReview(IN p_review_id INT)
+BEGIN
+	UPDATE Review
+    SET approval_status = 'Rejected'
+    WHERE review_id = p_review_id;
 END //
 
 DELIMITER ;

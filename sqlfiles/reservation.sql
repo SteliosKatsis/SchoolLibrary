@@ -1,47 +1,109 @@
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (15,49,'2018-02-03 23:51:07.791120','2018-02-06 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (4,11,'2018-03-31 02:34:20.791120','2018-04-06 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (36,71,'2018-04-04 11:58:42.791120','2018-04-08 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (32,38,'2018-05-05 17:05:43.791120','2018-05-10 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (29,81,'2018-05-31 17:03:28.791120','2018-06-06 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (18,80,'2018-06-20 06:36:42.791120','2018-06-23 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (14,47,'2018-07-23 19:15:02.791120','2018-07-24 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (12,74,'2018-12-06 18:04:13.791120','2018-12-12 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (55,25,'2019-02-21 04:42:52.791120','2019-02-25 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (5,91,'2019-03-14 00:30:00.791120','2019-03-15 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (2,9,'2019-03-16 16:33:32.791120','2019-03-19 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (6,6,'2019-05-08 08:15:34.791120','2019-05-13 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (67,85,'2019-07-26 11:57:36.791120','2019-07-29 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (73,30,'2019-09-13 05:08:07.791120','2019-09-18 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (33,97,'2019-10-12 00:10:41.791120','2019-10-14 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (39,99,'2019-11-07 20:21:15.791120','2019-11-14 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (63,87,'2020-01-12 00:47:14.791120','2020-01-17 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (71,13,'2020-01-12 10:42:24.791120','2020-01-18 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (13,100,'2020-02-08 12:45:48.791120','2020-02-10 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (46,36,'2020-02-09 07:21:47.791120','2020-02-12 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (42,59,'2020-03-15 05:02:18.791120','2020-03-17 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (35,21,'2020-05-09 19:44:06.791120','2020-05-14 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (27,48,'2020-07-11 21:43:21.791120','2020-07-13 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (60,46,'2020-08-02 10:42:15.791120','2020-08-03 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (69,27,'2020-08-14 00:30:31.791120','2020-08-15 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (1,22,'2020-12-25 02:05:25.791120','2020-12-26 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (11,69,'2021-01-01 23:07:31.791120','2021-01-08 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (28,32,'2021-02-23 07:42:01.791120','2021-02-24 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (54,60,'2021-03-23 01:50:56.791120','2021-03-25 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (10,82,'2021-03-30 13:52:57.791120','2021-04-01 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (61,93,'2021-05-10 15:20:08.791120','2021-05-11 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (53,29,'2021-08-10 20:15:11.791120','2021-08-16 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (7,42,'2021-11-22 22:58:21.791120','2021-11-26 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (62,54,'2021-11-27 01:26:17.791120','2021-11-30 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (25,50,'2021-12-31 14:19:07.791120','2022-01-02 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (37,62,'2022-02-22 05:54:11.791120','2022-02-27 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (23,4,'2022-03-11 12:19:44.791120','2022-03-13 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (59,15,'2022-06-26 03:47:43.791120','2022-06-29 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (20,53,'2022-07-06 17:21:21.791120','2022-07-13 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (9,3,'2022-07-28 18:38:07.791120','2022-08-03 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (26,52,'2022-08-09 15:20:05.791120','2022-08-10 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (57,98,'2022-08-08 01:37:47.791120','2022-08-12 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (24,26,'2022-10-07 13:37:59.791120','2022-10-10 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (49,18,'2022-11-12 10:14:02.791120','2022-11-17 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (41,5,'2023-01-11 08:05:09.791120','2023-01-12 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (72,14,'2023-02-15 07:16:53.791120','2023-02-15 09:23:37.791120','Expired');
-INSERT INTO Reservation(user_id,book_id,reservation_date,retrieval_date,reservation_status) VALUES (72,14,'2023-03-15 07:16:53.791120','2023-03-16 09:23:37.791120','Expired');
+INSERT INTO Reservation (user_id, book_id, reservation_date, loan_date, return_date, reservation_status)
+VALUES
+  (17, 32, '2020-02-15 00:00:00', '2020-02-18 00:00:00', '2020-04-14 00:00:00', 'Returned'),
+  (52, 87, '2021-05-26 00:00:00', '2021-05-30 00:00:00', '2021-07-10 00:00:00', 'Returned'),
+  (6, 99, '2020-06-12 00:00:00', '2020-06-16 00:00:00', '2020-07-26 00:00:00', 'Returned'),
+  (63, 59, '2023-01-19 00:00:00', '2023-01-22 00:00:00', '2023-02-05 00:00:00', 'Returned'),
+  (33, 75, '2020-10-03 00:00:00', '2020-10-08 00:00:00', '2020-11-20 00:00:00', 'Returned'),
+  (49, 98, '2022-06-01 00:00:00', '2022-06-04 00:00:00', '2022-06-16 00:00:00', 'Returned'),
+  (70, 92, '2022-05-18 00:00:00', '2022-05-23 00:00:00', '2022-06-29 00:00:00', 'Returned'),
+  (64, 24, '2021-06-07 00:00:00', '2021-06-09 00:00:00', '2021-07-17 00:00:00', 'Returned'),
+  (59, 56, '2022-01-28 00:00:00', '2022-02-03 00:00:00', '2022-03-24 00:00:00', 'Returned'),
+  (31, 13, '2021-04-04 00:00:00', '2021-04-07 00:00:00', '2021-05-09 00:00:00', 'Returned'),
+  (61, 70, '2021-11-02 00:00:00', '2021-11-07 00:00:00', '2021-12-25 00:00:00', 'Returned'),
+  (9, 16, '2022-08-20 00:00:00', '2022-08-22 00:00:00', '2022-10-21 00:00:00', 'Returned'),
+  (15, 43, '2022-02-22 00:00:00', '2022-02-24 00:00:00', '2022-03-24 00:00:00', 'Returned'),
+  (66, 88, '2020-12-07 00:00:00', '2020-12-12 00:00:00', '2021-01-13 00:00:00', 'Returned'),
+  (20, 42, '2021-05-03 00:00:00', '2021-05-06 00:00:00', '2021-06-16 00:00:00', 'Returned'),
+  (40, 2, '2022-04-18 00:00:00', '2022-04-20 00:00:00', '2022-06-01 00:00:00', 'Returned'),
+  (42, 10, '2022-06-12 00:00:00', '2022-06-17 00:00:00', '2022-08-06 00:00:00', 'Returned'),
+  (3, 53, '2021-08-02 00:00:00', '2021-08-06 00:00:00', '2021-09-16 00:00:00', 'Returned'),
+  (57, 19, '2022-12-15 00:00:00', '2022-12-19 00:00:00', '2023-02-06 00:00:00', 'Returned'),
+  (48, 50, '2021-02-20 00:00:00', '2021-02-25 00:00:00', '2021-04-10 00:00:00', 'Returned'),
+  (50, 39, '2020-07-24 00:00:00', '2020-07-27 00:00:00', '2020-09-06 00:00:00', 'Returned'),
+  (11, 86, '2022-03-08 00:00:00', '2022-03-12 00:00:00', '2022-04-25 00:00:00', 'Returned'),
+  (41, 7, '2021-01-08 00:00:00', '2021-01-12 00:00:00', '2021-02-25 00:00:00', 'Returned'),
+  (35, 47, '2020-08-13 00:00:00', '2020-08-16 00:00:00', '2020-09-30 00:00:00', 'Returned'),
+  (23, 94, '2021-06-23 00:00:00', '2021-06-28 00:00:00', '2021-08-15 00:00:00', 'Returned'),
+  (14, 21, '2021-12-01 00:00:00', '2021-12-04 00:00:00', '2022-01-15 00:00:00', 'Returned'),
+  (65, 33, '2020-11-21 00:00:00', '2020-11-25 00:00:00', '2021-01-01 00:00:00', 'Returned'),
+  (74, 29, '2021-01-31 00:00:00', '2021-02-02 00:00:00', '2021-03-27 00:00:00', 'Returned'),
+  (45, 68, '2023-02-05 00:00:00', '2023-02-10 00:00:00', '2023-03-27 00:00:00', 'Returned'),
+  (28, 81, '2022-02-01 00:00:00', '2022-02-04 00:00:00', '2022-03-17 00:00:00', 'Returned'),
+  (37, 11, '2020-03-20 00:00:00', '2020-03-22 00:00:00', '2020-04-30 00:00:00', 'Returned'),
+  (8, 40, '2022-07-16 00:00:00', '2022-07-19 00:00:00', '2022-08-31 00:00:00', 'Returned'),
+  (67, 57, '2021-09-26 00:00:00', '2021-09-29 00:00:00', '2021-11-07 00:00:00', 'Returned'),
+  (44, 14, '2020-09-17 00:00:00', '2020-09-21 00:00:00', '2020-11-11 00:00:00', 'Returned'),
+  (16, 85, '2022-09-09 00:00:00', '2022-09-11 00:00:00', '2022-10-30 00:00:00', 'Returned'),
+  (36, 60, '2021-03-10 00:00:00', '2021-03-14 00:00:00', '2021-04-26 00:00:00', 'Returned'),
+  (46, 83, '2022-11-24 00:00:00', '2022-11-27 00:00:00', '2023-01-05 00:00:00', 'Returned'),
+  (13, 93, '2021-07-17 00:00:00', '2021-07-19 00:00:00', '2021-08-27 00:00:00', 'Returned'),
+  (58, 51, '2021-11-23 00:00:00', '2021-11-25 00:00:00', '2022-01-06 00:00:00', 'Returned'),
+  (22, 97, '2023-03-03 00:00:00', '2023-03-08 00:00:00', '2023-04-17 00:00:00', 'Returned'),
+  (47, 67, '2023-04-19 00:00:00', '2023-04-23 00:00:00', '2023-06-04 00:00:00', 'Returned'),
+  (5, 31, '2022-10-13 00:00:00', '2022-10-18 00:00:00', '2022-12-02 00:00:00', 'Returned'),
+  (24, 73, '2021-08-27 00:00:00', '2021-09-02 00:00:00', '2021-10-30 00:00:00', 'Returned'),
+  (39, 38, '2023-04-29 00:00:00', '2023-05-04 00:00:00', '2023-06-12 00:00:00', 'Returned'),
+  (69, 69, '2020-04-21 00:00:00', '2020-04-26 00:00:00', '2020-06-05 00:00:00', 'Returned'),
+  (4, 72, '2020-05-31 00:00:00', '2020-06-04 00:00:00', '2020-07-14 00:00:00', 'Returned'),
+  (51, 58, '2020-07-06 00:00:00', '2020-07-09 00:00:00', '2020-08-24 00:00:00', 'Returned'),
+  (7, 23, '2022-07-02 00:00:00', '2022-07-06 00:00:00', '2022-08-20 00:00:00', 'Returned'),
+  (34, 71, '2020-10-18 00:00:00', '2020-10-21 00:00:00', '2020-12-01 00:00:00', 'Returned'),
+  (62, 64, '2023-01-07 00:00:00', '2023-01-12 00:00:00', '2023-02-24 00:00:00', 'Returned'),
+  (55, 77, '2022-03-24 00:00:00', '2022-03-29 00:00:00', '2022-05-07 00:00:00', 'Returned'),
+  (27, 96, '2022-01-05 00:00:00', '2022-01-08 00:00:00', '2022-02-18 00:00:00', 'Returned'),
+  (25, 4, '2023-01-26 00:00:00', '2023-01-29 00:00:00', '2023-03-10 00:00:00', 'Returned'),
+  (68, 25, '2023-01-12 00:00:00', '2023-01-17 00:00:00', '2023-03-07 00:00:00', 'Returned'),
+  (21, 9, '2020-11-12 00:00:00', '2020-11-15 00:00:00', '2020-12-27 00:00:00', 'Returned'),
+  (56, 26, '2022-04-10 00:00:00', '2022-04-12 00:00:00', '2022-05-29 00:00:00', 'Returned'),
+  (53, 3, '2022-05-29 00:00:00', '2022-06-01 00:00:00', '2022-07-15 00:00:00', 'Returned');
+  
+INSERT INTO Reservation (user_id, book_id, reservation_date, loan_date, return_date, reservation_status)
+VALUES
+  (8, 24, '2023-05-25 18:00:00', '2023-05-28 14:00:00', '2023-06-08 14:00:00', 'Borrowed'),
+  (50, 65, '2023-05-25 19:00:00', '2023-05-28 15:00:00', '2023-06-08 15:00:00', 'Borrowed'),
+  (56, 43, '2023-05-25 20:00:00', '2023-05-28 16:00:00', '2023-06-08 16:00:00', 'Borrowed'),
+  (34, 90, '2023-05-25 21:00:00', '2023-05-28 17:00:00', '2023-06-08 17:00:00', 'Borrowed'),
+  (19, 17, '2023-05-25 22:00:00', '2023-05-28 18:00:00', '2023-06-08 18:00:00', 'Borrowed'),
+  (6, 76, '2023-05-25 23:00:00', '2023-05-28 19:00:00', '2023-06-08 19:00:00', 'Borrowed'),
+  (30, 37, '2023-05-26 00:00:00', '2023-05-28 20:00:00', '2023-06-08 20:00:00', 'Borrowed'),
+  (21, 49, '2023-05-26 01:00:00', '2023-05-28 21:00:00', '2023-06-08 21:00:00', 'Borrowed'),
+  (59, 11, '2023-05-26 02:00:00', '2023-05-28 22:00:00', '2023-06-08 22:00:00', 'Borrowed'),
+  (16, 38, '2023-05-26 03:00:00', '2023-05-28 23:00:00', '2023-06-08 23:00:00', 'Borrowed'),
+  (48, 27, '2023-05-26 04:00:00', '2023-05-29 00:00:00', '2023-06-09 00:00:00', 'Borrowed'),
+  (32, 77, '2023-05-26 14:00:00', '2023-05-29 10:00:00', '2023-06-09 10:00:00', 'Borrowed'),
+  (7, 64, '2023-05-26 15:00:00', '2023-05-29 11:00:00', '2023-06-09 11:00:00', 'Borrowed'),
+  (40, 22, '2023-05-26 16:00:00', '2023-05-29 12:00:00', '2023-06-09 12:00:00', 'Borrowed'),
+  (18, 51, '2023-05-26 17:00:00', '2023-05-29 13:00:00', '2023-06-09 13:00:00', 'Borrowed'),
+  (31, 88, '2023-05-26 18:00:00', '2023-05-29 14:00:00', '2023-06-09 14:00:00', 'Borrowed'),
+  (9, 16, '2023-05-26 19:00:00', '2023-05-29 15:00:00', '2023-06-09 15:00:00', 'Borrowed'),
+  (47, 89, '2023-05-27 18:00:00', '2023-05-30 14:00:00', '2023-06-10 14:00:00', 'Borrowed'),
+  (2, 17, '2023-05-27 19:00:00', '2023-05-30 15:00:00', '2023-06-10 15:00:00', 'Borrowed'),
+  (37, 66, '2023-05-27 20:00:00', '2023-05-30 16:00:00', '2023-06-10 16:00:00', 'Borrowed'),
+  (10, 49, '2023-05-27 21:00:00', '2023-05-30 17:00:00', '2023-06-10 17:00:00', 'Borrowed'),
+  (65, 10, '2023-05-27 22:00:00', '2023-05-30 18:00:00', '2023-06-10 18:00:00', 'Borrowed'),
+  (15, 38, '2023-05-27 23:00:00', '2023-05-30 19:00:00', '2023-06-10 19:00:00', 'Borrowed'),
+  (44, 27, '2023-05-28 00:00:00', '2023-05-30 20:00:00', '2023-06-10 20:00:00', 'Borrowed'),
+  (3, 54, '2023-05-28 01:00:00', '2023-05-30 21:00:00', '2023-06-10 21:00:00', 'Borrowed'),
+  (38, 33, '2023-05-28 02:00:00', '2023-05-30 22:00:00', '2023-06-10 22:00:00', 'Borrowed'),
+  (21, 91, '2023-05-28 03:00:00', '2023-05-30 23:00:00', '2023-06-10 23:00:00', 'Borrowed'),
+  (29, 78, '2023-05-28 10:00:00', '2023-05-31 06:00:00', '2023-06-11 06:00:00', 'Borrowed'),
+  (5, 65, '2023-05-28 11:00:00', '2023-05-31 07:00:00', '2023-06-11 07:00:00', 'Borrowed'),
+  (25, 21, '2023-05-28 12:00:00', '2023-05-31 08:00:00', '2023-06-11 08:00:00', 'Borrowed'),
+  (16, 52, '2023-05-28 13:00:00', '2023-05-31 09:00:00', '2023-06-11 09:00:00', 'Borrowed'),
+  (2, 17, '2023-05-28 15:00:00', '2023-05-31 11:00:00', '2023-06-11 11:00:00', 'Borrowed'),
+  (37, 66, '2023-05-28 16:00:00', '2023-05-31 12:00:00', '2023-06-11 12:00:00', 'Borrowed'),
+  (10, 49, '2023-05-28 17:00:00', '2023-05-31 13:00:00', '2023-06-11 13:00:00', 'Borrowed'),
+  (65, 10, '2023-05-28 18:00:00', '2023-05-31 14:00:00', '2023-06-11 14:00:00', 'Borrowed'),
+  (15, 38, '2023-05-28 19:00:00', '2023-05-31 15:00:00', '2023-06-11 15:00:00', 'Borrowed'),
+  (44, 27, '2023-05-28 20:00:00', '2023-05-31 16:00:00', '2023-06-11 16:00:00', 'Borrowed'),
+  (56, 59, '2023-05-29 00:00:00', '2023-05-31 20:00:00', '2023-06-11 20:00:00', 'Borrowed'),
+  (12, 42, '2023-05-29 01:00:00', '2023-05-31 21:00:00', '2023-06-11 21:00:00', 'Borrowed'),
+  (27, 88, '2023-05-29 02:00:00', '2023-05-31 22:00:00', '2023-06-11 22:00:00', 'Borrowed'),
+  (6, 20, '2023-05-29 03:00:00', '2023-05-31 23:00:00', '2023-06-11 23:00:00', 'Borrowed'),
+  (43, 73, '2023-05-29 04:00:00', '2023-06-01 00:00:00', '2023-06-12 00:00:00', 'Borrowed'),
+  (9, 37, '2023-05-29 05:00:00', '2023-06-01 01:00:00', '2023-06-12 01:00:00', 'Borrowed'),
+  (29, 78, '2023-05-29 06:00:00', '2023-06-01 02:00:00', '2023-06-12 02:00:00', 'Borrowed'),
+  (5, 65, '2023-05-29 07:00:00', '2023-06-01 03:00:00', '2023-06-12 03:00:00', 'Borrowed'),
+  (25, 21, '2023-05-29 08:00:00', '2023-06-01 04:00:00', '2023-06-12 04:00:00', 'Borrowed'),
+  (21, 91, '2023-05-29 19:00:00', '2023-06-01 15:00:00', '2023-06-12 15:00:00', 'Borrowed');

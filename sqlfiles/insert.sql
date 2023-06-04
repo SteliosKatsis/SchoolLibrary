@@ -52,7 +52,7 @@ CREATE PROCEDURE InsertBook (
   IN p_book_num_of_pages INT,
   IN p_book_summary TEXT,
   IN p_book_available_copies INT,
-  IN p_book_img BLOB,
+  IN p_book_img TEXT,
   IN p_book_language VARCHAR(5),
   IN p_authors VARCHAR(255),
   IN p_categories VARCHAR(255),
@@ -199,10 +199,6 @@ BEGIN
     UPDATE Reservation
     SET reservation_status = 'Canceled'
     WHERE reservation_status = 'Pending' AND NOW() > DATE_ADD(reservation_date, INTERVAL 7 DAY);
-    
-    UPDATE Reservation
-    SET reservation_status = 'Borrowed'
-    WHERE reservation_status = 'Active' AND NOW() > loan_date;
     
     UPDATE Reservation
     SET reservation_status = 'Delayed'

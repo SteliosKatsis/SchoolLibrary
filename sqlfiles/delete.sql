@@ -4,13 +4,15 @@ DELIMITER //
 
 CREATE PROCEDURE DeleteReservation(IN p_reservation_id INT)
 BEGIN
-	SELECT role INTO @v_role
+	DECLARE v_role VARCHAR(50);
+
+	SELECT reservation_status INTO v_role
     FROM Reservation
     WHERE reservation_id = p_reservation_id;
     
-    IF @v_role = 'Pending' OR @v_role = 'Returned' THEN
+    IF v_role = 'Pending' OR v_role = 'Returned' THEN
 		DELETE FROM Reservation WHERE reservation_id = p_reservation_id;
-	ELSEIF @v_role = 'Active' THEN
+	ELSEIF v_role = 'Active' THEN
 		CALL CancelReservation(p_reservation_id);
         
         DELETE FROM Reservation WHERE reservation_id = p_reservation_id;
@@ -39,8 +41,8 @@ BEGIN
 	DECLARE done INT DEFAULT FALSE;
 
 	-- Declare cursor for reviews and reservations
-	DECLARE cur_reviews CURSOR FOR SELECT review_id FROM reviews WHERE user_id = p_user_id;
-	DECLARE cur_reservations CURSOR FOR SELECT reservation_id FROM reservations WHERE user_id = p_user_id;
+	DECLARE cur_reviews CURSOR FOR SELECT review_id FROM review WHERE book_id = p_book_id;
+	DECLARE cur_reservations CURSOR FOR SELECT reservation_id FROM reservation WHERE book_id = p_book_id;
 
 	-- Declare continue handler
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
@@ -95,8 +97,8 @@ BEGIN
 	DECLARE done INT DEFAULT FALSE;
 
 	-- Declare cursor for reviews and reservations
-	DECLARE cur_reviews CURSOR FOR SELECT review_id FROM reviews WHERE user_id = p_user_id;
-	DECLARE cur_reservations CURSOR FOR SELECT reservation_id FROM reservations WHERE user_id = p_user_id;
+	DECLARE cur_reviews CURSOR FOR SELECT review_id FROM review WHERE user_id = p_user_id;
+	DECLARE cur_reservations CURSOR FOR SELECT reservation_id FROM reservation WHERE user_id = p_user_id;
 
 	-- Declare continue handler
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
@@ -147,7 +149,7 @@ BEGIN
 
 	-- Declare cursor for users and books
 	DECLARE cur_users CURSOR FOR SELECT user_id FROM User WHERE school_id = p_school_id;
-	DECLARE cur_books CURSOR FOR SELECT book_id FROM Book WHERE user_id = p_school_id;
+	DECLARE cur_books CURSOR FOR SELECT book_id FROM Book WHERE school_id = p_school_id;
 
 	-- Declare continue handler
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;

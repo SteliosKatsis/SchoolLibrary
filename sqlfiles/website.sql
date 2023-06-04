@@ -3,14 +3,13 @@ CREATE DATABASE website;
 USE website;
 
 CREATE TABLE School (
-  school_id INT AUTO_INCREMENT,
-  school_name VARCHAR(100) NOT NULL,
+  school_id INT PRIMARY KEY AUTO_INCREMENT,
+  school_name VARCHAR(100) UNIQUE NOT NULL,
   address VARCHAR(100) NOT NULL,
   city VARCHAR(100) NOT NULL,
   phone VARCHAR(20) NOT NULL,
   email VARCHAR(100) NOT NULL,
-  director_name VARCHAR(100) NOT NULL,
-  PRIMARY KEY (school_id, school_name)
+  director_name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE User (
@@ -35,7 +34,7 @@ CREATE TABLE Book (
   number_of_pages INT,
   summary TEXT,
   available_copies INT NOT NULL,
-  img BLOB,
+  img TEXT,
   language VARCHAR(5) NOT NULL,
   FOREIGN KEY (school_id) REFERENCES School (school_id)
 );
