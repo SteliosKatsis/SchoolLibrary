@@ -13,7 +13,7 @@
         <nav>
             <ul class="navbar">
                 <li><a href="{{ url_for('operator_homepage') }}">Main Page</a></li>
-                <li><a href="{{ url_for('approval') }}">Users</a></li>
+                <li><a href="{{ url_for('operator_users') }}">Users</a></li>
                 <li><a href="{{ url_for('operator_borrowed') }}">Borrowed Books</a></li>
                 <li><a href="{{ url_for('operator_reserved') }}">Reserved Books</a></li>
                 <li><a href="{{ url_for('operator_reviews') }}">Reviews</a></li>
@@ -23,17 +23,17 @@
     </div>
 
     <div class="form">
-        <form>
+        <form action="/operator_users_edit" method="POST">
             <h2>All Pending Users</h2><br>
             {% for user in pending_users %}
             <ul class="pending">
                 <li>
-                    <h4>{{ first_name }} {{ last_name }}</h4>
-                    <p>Username: {{ username }}</p><br>
-                    <p>Age: {{ age }}</p><br>
-                    <p>Role: {{ role }}</p><br>
-                    <button name="approve">Approve</button>
-                    <button name="decline">Decline</button>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p>Username: {{ user.username }}</p><br>
+                    <p>Age: {{ user.age }}</p><br>
+                    <p>Role: {{ user.role }}</p><br>
+                    <button name="approve" value="{{ user.user_id }}">Approve</button>
+                    <button name="decline" value="{{ user.user_id }}">Decline</button>
                 </li>
             </ul>
             {% endfor %}
@@ -42,11 +42,12 @@
             {% for user in approved_users %}
             <ul class="approved">
                 <li>
-                    <h4>{{ first_name }} {{ last_name }}</h4>
-                    <p>Username: {{ username }}</p><br>
-                    <p>Age: {{ age }}</p><br>
-                    <p>Role: {{ role }}</p><br>
-                    <button name="decline">Decline</button>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p>Username: {{ user.username }}</p><br>
+                    <p>Age: {{ user.age }}</p><br>
+                    <p>Role: {{ user.role }}</p><br>
+                    <button name="decline" value="{{ user.user_id }}">Deactivate</button>
+                    <button name="delete" value="{{ user.user_id }}">Delete</button>
                 </li>
             </ul>
             {% endfor %}
@@ -55,11 +56,12 @@
             {% for user in declined_users %}
             <ul class="declined">
                 <li>
-                    <h4>{{ first_name }} {{ last_name }}</h4>
-                    <p>Username: {{ username }}</p><br>
-                    <p>Age: {{ age }}</p><br>
-                    <p>Role: {{ role }}</p><br>
-                    <button name="approve">Decline</button>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p>Username: {{ user.username }}</p><br>
+                    <p>Age: {{ user.age }}</p><br>
+                    <p>Role: {{ user.role }}</p><br>
+                    <button name="approve" value="{{ user.user_id }}">Approve</button>
+                    <button name="delete" value="{{ user.user_id }}">Delete</button>
                 </li>
             </ul>
             {% endfor %}

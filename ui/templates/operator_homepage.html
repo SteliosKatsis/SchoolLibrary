@@ -44,8 +44,9 @@
 
                 <select name="categories">
                     <option disabled selected value="">Search by Category</option>
-                    <option>Seretakos</option>
-                    <option>Katsis</option>
+                    {% for category in categories %}
+                    <option>{{ category}}</option>
+                    {% endfor %}
                 </select>
                 <input type="radio" name="choice" value="category">
             </div>

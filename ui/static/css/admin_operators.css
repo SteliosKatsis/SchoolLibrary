@@ -96,7 +96,7 @@ p {
     border-bottom: 1px solid white;
 }
 
-.pending li, .approved li, .declined li{
+.form li {
     margin-bottom: .5rem;
     padding-bottom: 1rem;
     list-style-type: none;

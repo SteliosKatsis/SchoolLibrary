@@ -4,28 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "../static/css/admin_backup_restore.css" />
-    <title>Document</title>
+    <link rel = "stylesheet" href = "../static/css/admin_home.css" />
+    <title>Administrator Home Page</title>
 </head>
-<body>
+<body>    
     <div class="navbar">
         <nav>
             <ul class="navbar">
                 <li><a href="{{ url_for('admin_home') }}">Main Page</a></li>
-                <li><a href="{{ url_for('approval') }}">Operators</a></li>
+                <li><a href="{{ url_for('admin_operators') }}">Operators</a></li>
                 <li><a href="{{ url_for('backup_restore') }}">Backup-Restore</a></li>
-                <li><a href="{{ url_for('approval') }}">Schools</a></li>
+                <li><a href="{{ url_for('admin_schools') }}">Schools</a></li>
                 <li><a href="{{ url_for('edit_personal_info') }}">Change Info</a></li>
             </ul>
         </nav>
     </div>
 
-    <div class="form">
-        <form action="{{ url_for('backup_and_return') }}" method="POST">
-            <button name="backup" value="backup">Back Up Database</button>
-            <button name="restore" value="restore">Restore Database</button>
+    <div class="query 1">
+        <form action="/admin_query1" method="POST">
+            <h3>The total number of loans per school is as follows:</h3>
+            {% for school in query %}
+            <p>Total Loans of school {{ total.school_name }} are: {{ total.reservation_count }}</p>
+            {% endfor %}
         </form>
     </div>
-    
 </body>
 </html>

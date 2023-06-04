@@ -26,18 +26,18 @@
         <form action="/operator_reviews" method="POST">
             <h2>Review Average based on Category</h2>
             <ul class="category">
-                {% for category, review in category_average %}
+                {% for review in category_average %}
                 <li>
-                    <p>{{category}}:  {{review}}</p>
+                    <p>{{review.category_name}}:  {{review.review}}</p>
                 </li>
                 {% endfor %}
             </ul>
 
             <h2>Review Average based on Users</h2>
             <ul class="user">
-                {% for first_name, last_name, review in user_average %}
+                {% for review in user_average %}
                 <li>
-                    <p>{{first_name}} {{last_name}}:  {{review}}</p>
+                    <p>{{review.first_name}} {{review.last_name}}:  {{review.review}}</p>
                 </li>
                 {% endfor %}
             </ul>

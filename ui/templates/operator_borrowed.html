@@ -27,7 +27,7 @@
             <div class="labels">
                 <div class="user_search">
                     <form action="/operator_borrowed_user", method="POST">
-                        <input type="text" name="user_loans" placeholder="Search by user">
+                        <input type="text" name="user_loans" placeholder="Search by username">
                         <button type="submit" name="search" value="user">Search</button><br>
                     </form>
                 </div>
@@ -42,10 +42,11 @@
             </div>
 
             <div>
+                <form action="/operator_borrowed", method="POST"></form>
                 <h2>All Borrowed Books</h2>
-                <ul class="books">
+                <ul class="book">
                     <!-- Loop through the borrowed books data and generate list items -->
-                    {% for book in borrowed_books %}
+                    {% for book in books %}
                     <li>
                         <img src="{{ book.img }}" alt="{{ book.title }}" />
                         <div class="book-info">
@@ -55,9 +56,11 @@
                             <p>Number of Pages: {{ book.number_of_pages }}</p>
                             <p>Summary: {{ book.summary }}</p>
                             <p>Available Copies: {{ book.available_copies }}</p>
+                            <p>User Name: {{ book.first_name }} {{ book.last_name }}</p>
                             <p>Loan Date: {{ book.loan_date }}</p>
-                            <p>Return Date: {{ book.return.date }}</p>
+                            <p>Return Date: {{ book.return_date }}</p>
                             <p>Delayed: {% if book.del %} Yes {% else %} No {% endif %}</p>
+                            <button name="return" value='{{ book.book_id }}'>Return Book</button>
                         </div>
                     </li>
                     {% endfor %}

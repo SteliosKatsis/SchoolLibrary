@@ -50,14 +50,14 @@ def DeleteUser(user_id):
        # Call the stored procedure
         cursor.callproc('DeleteReservation', (i,))
         # Retrieve output parameters if applicable
-        cursor.fetchall()  # Print the output parameter value(s)
+        cursor.fetchall()
         # Commit the changes
         connection.commit()
     for i in rev_id:
        # Call the stored procedure
         cursor.callproc('DeleteReview', (i,))
         # Retrieve output parameters if applicable
-        cursor.fetchall()  # Print the output parameter value(s)
+        cursor.fetchall()
         # Commit the changes
         connection.commit()
 
@@ -91,14 +91,14 @@ def DeleteBook(book_id):
        # Call the stored procedure
         cursor.callproc('DeleteReservation', (i,))
         # Retrieve output parameters if applicable
-        cursor.fetchall()  # Print the output parameter value(s)
+        cursor.fetchall()
         # Commit the changes
         connection.commit()
     for i in rev_id:
        # Call the stored procedure
         cursor.callproc('DeleteReview', (i,))
         # Retrieve output parameters if applicable
-        cursor.fetchall()  # Print the output parameter value(s)
+        cursor.fetchall()
         # Commit the changes
         connection.commit()
         
@@ -123,36 +123,36 @@ def DeleteSchool(school_id):
     connection = get_database_connection()
     cursor = connection.cursor()
 
-    cursor.execute("SELECT reservation_id FROM Reservation WHERE user_id = %s", (school_id,))
-    res_id = list()
+    cursor.execute("SELECT book_id FROM Book WHERE school_id = %s", (school_id,))
+    book_id = list()
     while(True):
         x = cursor.fetchone()
         if x is None: break
-        res_id.append(x[0])
+        book_id.append(x[0])
         
-    cursor.execute("SELECT review_id FROM Review WHERE user_id = %s", (school_id,))
-    rev_id = list()
+    cursor.execute("SELECT user_id FROM User WHERE school_id = %s", (school_id,))
+    user_id = list()
     while(True):
         x = cursor.fetchone()
         if x is None: break
-        rev_id.append(x[0])
+        user_id.append(x[0])
         
-    for i in res_id:
+    for i in book_id:
        # Call the stored procedure
-        cursor.callproc('DeleteReservation', (i,))
+        cursor.callproc('DeleteBook', (i,))
         # Retrieve output parameters if applicable
-        cursor.fetchall()  # Print the output parameter value(s)
+        cursor.fetchall()
         # Commit the changes
         connection.commit()
-    for i in rev_id:
+    for i in user_id:
        # Call the stored procedure
-        cursor.callproc('DeleteReview', (i,))
+        cursor.callproc('DeleteUser', (i,))
         # Retrieve output parameters if applicable
-        cursor.fetchall()  # Print the output parameter value(s)
+        cursor.fetchall()
         # Commit the changes
         connection.commit()
 
-    cursor.execute("DELETE FROM User WHERE user_id = %s", (school_id,))
+    cursor.execute("DELETE FROM School WHERE school_id = %s", (school_id,))
     cursor.fetchall()
     connection.commit()
     
@@ -160,7 +160,7 @@ def DeleteSchool(school_id):
     connection.close()
     
 
-# ------------------------Login-------------------------- #
+# --------------------------Login------------------------------ #
 
 @app.route('/')
 def initial():
@@ -281,15 +281,14 @@ def login():
         # Redirect to a page indicating that the user is pending approval
         return redirect(url_for('pending_approval_page'))
     
-    
-    
+
+# ----------------------------User----------------------------------- #
+
 @app.route('/user_homepage')
 def user():
     return render_template('home.html')
 
 
-
-# ----------------------------User----------------------------------- #
 
 @app.route('/edit_personal_info')
 def edit_personal_info():
@@ -344,7 +343,17 @@ def update_info():
     my_message = "Your info have been updated successfully."
 
     if role == 'Administrator':
-        return render_template('admin_home.html', message = my_message)
+        return render_template(
+            'admin_home.html', 
+            message = my_message,
+            result_1 = session.get('result_1'),
+            result_2 = session.get('result_2'),
+            result_3 = session.get('result_3'),
+            result_4 = session.get('result_4'),
+            result_5 = session.get('result_5'),
+            result_6 = session.get('result_6'),
+            result_7 = session.get('result_7'),
+            )
     
     elif role == 'Operator':
         return render_template('operator_homepage.html', message = my_message)
@@ -360,13 +369,17 @@ def update_info():
     return render_template('home.html', message = my_message)
 
 
-
-
 # --------------------------Operator--------------------------------- #
 
 @app.route('/operator_homepage')
 def operator_homepage():
-    return render_template('operator_homepage.html')
+    
+    categories = ["Adventure", "Biography", "Children's", "Classics", "Comedy",
+    "Crime", "Dystopian", "Fantasy", "Historical Fiction", "Horror"
+    "Mystery", "Philosophy", "Poetry", "Romance", "Science Fiction"
+    "Self-help", "Short Stories", "Thriller", "Travel", "Young Adult"]
+    
+    return render_template('operator_homepage.html', categories = categories)
 
 
 
@@ -501,7 +514,7 @@ def update_book_info():
     (book_id, school_id, new_isbn, new_title, new_publisher, new_number_of_pages, 
      new_summary, new_available_copies, new_img, new_language))
     
-    cursor.execute("SELECT * FROM Book")
+    cursor.execute("SELECT * FROM Book WHERE school_id = %s", (school_id,))
 
     column_names = [i[0] for i in cursor.description]
     new_books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
@@ -515,24 +528,9 @@ def update_book_info():
     connection.close()
     print("Database connection closed")
 
-
-    # Store the new information
-    # session['school_name'] = new_school_name
-    # session['address'] = new_address
-    # session['city'] = new_city
-    # session['phone'] = new_phone
-    # session['email'] = new_email
-    # session['director_name'] = new_director_name
-
     my_message = "Your info have been updated successfully."
 
     return render_template('operator_books.html', message = my_message, books = session.get('books'))
-
-
-
-
-
-
 
 
 
@@ -546,10 +544,10 @@ def operator_borrowed():
     # Create a cursor object to interact with the database
 
     cursor = connection.cursor()
-    query = """SELECT b.*, r.loan_date, r.return_date, r.return_date > NOW()
-    AS del FROM (Reservation AS r) JOIN (Book AS b) ON r.book_id=b.book_id
-    WHERE b.school_id = %s AND (r.reservation_status = 'Borrowed' OR r.reservation_status='Delayed')"""
-    cursor.execute(query, [school_id])
+    query = """SELECT b.*, u.first_name, u.last_name, r.loan_date, r.return_date, (r.return_date > NOW()) AS del 
+    FROM Reservation AS r JOIN Book AS b ON r.book_id = b.book_id JOIN User AS u ON u.user_id = r.user_id
+    WHERE b.school_id = %s AND (r.reservation_status = 'Borrowed' OR r.reservation_status = 'Delayed')"""
+    cursor.execute(query, (school_id,))
     column_names = [i[0] for i in cursor.description]
     books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
     cursor.close()
@@ -558,10 +556,138 @@ def operator_borrowed():
 
 
 
+@app.route('/operator_borrowed')
+def operator_borrowed_return():
+    school_id = session.get('school_id')
+    book_id = request.form.get('return')
+    
+    if (book_id is not None):
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.callproc('ReturnBook', (book_id,))
+        connection.commit()
+        cursor.close()
+
+    return redirect(url_for('operator_borrowed'))
+
+
+
+@app.route('/operator_borrowed_user', methods=['POST'])
+def operator_borrowed_user():
+    school_id = session.get('school_id')
+    search = request.form.get('search')
+    username = request.form.get('user')
+    
+    if (search == 'user'):
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        query = """SELECT b.*, u.first_name, u.last_name, r.loan_date, r.return_date,
+        (r.return_date > NOW()) AS del FROM Reservation AS r JOIN Book AS b
+        ON r.book_id = b.book_id JOIN User AS u ON u.user_id = r.user_id
+        WHERE b.school_id = %s AND (r.reservation_status = 'Borrowed'
+        OR r.reservation_status = 'Delayed') AND u.username = %s"""
+        cursor.execute(query, (school_id,username))
+        column_names = [i[0] for i in cursor.description]
+        books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+        cursor.close()
+        
+        return render_template('operator_borrowed_user.html', books = books)
+
+
+
 @app.route('/operator_reserved')
 def operator_reserved():
-    return render_template('operator_reserved.html')
+    school_id = session.get('school_id')
+    
+    # Create a new database connection for this request
+    connection = get_database_connection()
 
+    # Create a cursor object to interact with the database
+
+    cursor = connection.cursor()
+    query = """SELECT b.*, u.first_name, u.last_name, r.loan_date, r.return_date
+    FROM Reservation AS r JOIN Book AS b ON r.book_id = b.book_id JOIN User AS u 
+    ON u.user_id = r.user_id WHERE b.school_id = %s AND r.reservation_status = 'Active'"""
+    cursor.execute(query, (school_id,))
+    column_names = [i[0] for i in cursor.description]
+    books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    cursor.close()
+
+    return render_template('operator_reserved.html', books = books)
+
+
+
+@app.route('/operator_users')
+def operator_users():
+    school_id = session.get('school_id')
+    connection = get_database_connection()
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT * FROM User WHERE approval_status = 'Pending' AND school_id = %s", (school_id,))
+    column_names = [i[0] for i in cursor.description]
+    pending_users = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+
+    cursor.execute("SELECT * FROM User WHERE approval_status = 'Approved' AND school_id = %s", (school_id,))
+    column_names = [i[0] for i in cursor.description]
+    approved_users = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+
+    cursor.execute("SELECT * FROM User WHERE approval_status = 'Rejected' AND school_id = %s", (school_id,))
+    column_names = [i[0] for i in cursor.description]
+    declined_users = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+
+    # Close the cursor and database connection
+    cursor.close()
+    connection.close()
+    print("Database connection closed")
+
+
+    return render_template('operator_users.html', 
+        pending_users = pending_users,
+        approved_users = approved_users,
+        declined_users = declined_users
+    )
+
+
+
+@app.route('/operator_users_edit', methods=['POST'])
+def operator_users_edit():
+    approve = request.form.get('approve')
+    decline = request.form.get('decline')
+    delete = request.form.get('delete')
+    
+    user_id = 0
+    if(approve is not None):
+        user_id = int(approve)
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.callproc('ApproveUser', (user_id,))
+
+        # Commit the changes to the database
+        connection.commit()
+
+        # Close the cursor and database connection
+        cursor.close()
+        connection.close()
+        print("Database connection closed")
+
+    elif (decline is not None):
+        user_id = int(decline)
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.callproc('RejectUser', (user_id,))
+        # Commit the changes to the database
+        connection.commit()
+
+        # Close the cursor and database connection
+        cursor.close()
+        connection.close()
+        print("Database connection closed")
+
+    else:
+        user_id = int(delete)
+        DeleteUser(user_id)
+    
+    return redirect(url_for('operator_users'))
 
 
 @app.route('/approval')
@@ -584,9 +710,27 @@ def operator_reviews():
     cursor.execute(query, params)
     column_names = [i[0] for i in cursor.description]
     pending = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    
+    query = """SELECT c.category_name, AVG(r.rating) AS review FROM ((Category
+    AS c JOIN Book AS b ON b.book_id = c.book_id) JOIN Review AS r ON
+    r.book_id = b.book_id) WHERE b.school_id = %s GROUP BY c.category_name ORDER BY c.category_name"""
+    params = (school_id,)
+    cursor.execute(query, params)
+    column_names = [i[0] for i in cursor.description]
+    cat_average = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    
+    query = """SELECT u.first_name, u.last_name, AVG(r.rating) AS review FROM
+    ((School AS s JOIN User AS u ON s.school_id = u.school_id) JOIN Review AS r ON
+    r.user_id = u.user_id) WHERE u.school_id = %s GROUP BY u.first_name, u.last_name ORDER BY u.last_name"""
+    params = (school_id,)
+    cursor.execute(query, params)
+    column_names = [i[0] for i in cursor.description]
+    user_average = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
     cursor.close()
     
-    return render_template('operator_reviews.html', pending_users = pending)
+    return render_template('operator_reviews.html',category_average = cat_average, user_average = user_average, pending_users = pending)
+
+
 
 @app.route('/operator_reviews', methods=['POST'])
 def operator_reviews_new():
@@ -597,57 +741,49 @@ def operator_reviews_new():
     if(approval is not None):
         review_id = approval
         query = "UPDATE Review SET approval_status = 'Approved' WHERE review_id = %s"
-    elif(decline is not None):
+    else:
         review_id = decline
         query = "UPDATE Review SET approval_status = 'Rejected' WHERE review_id = %s"
-        
+
     connection = get_database_connection()
     cursor = connection.cursor()
     params = [review_id]
     cursor.execute(query, params)
+    connection.commit()
     cursor.close()
     
     return redirect(url_for('operator_reviews'))
 
 
-# ----------------------Error Pages------------------ #
-
-@app.route('/logout')
-def logout():
-    # Clear the session variables
-    session.clear()
-
-    # Redirect to the login page
-    return redirect(url_for('login'))
-
-
-
-@app.route('/pending_approval')
-def pending_approval_page():
-    # Code to render the pending approval page
-    return render_template('pending_approval.html')
-
-
-
-@app.route('/error')
-def error_page():
-    # Code to render the error page
-    return render_template('error.html')
-
-
-
-
 # --------------------- Administrator --------------------------- #
 
-@app.route('/backup_restore')
-def backup_restore():
-    return render_template('admin_backup_restore.html')
+# @app.route('/backup_and_restore')
+# def backup_restore():
+#     operation = request.form.get('submit')
+#     if operation == 'backup':
+#         return redirect(url_for('backup'))
+#     elif operation == 'restore':
+#         return redirect(url_for('restore'))
+    
+    
+    
+@app.route('/admin_query1', methods=['POST'])
+def admin_query1():
+    month = request.form.get('month')
+    year = request.form.get('year')
+    button = request.form.get('search')
 
-
-
-@app.route('/admin_home')
-def admin_home():
-    return render_template('admin_home.html')
+    if(button is not None):
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.execute("""SELECT COUNT(Reservation.reservation_id) AS reservation_count, School.school_name FROM 
+	    (Reservation INNER JOIN User ON Reservation.user_id=User.user_id) INNER JOIN School
+	    ON School.school_id=User.school_id WHERE (Reservation.reservation_status='Borrowed' OR Reservation.reservation_status='Returned')
+        AND MONTH(Reservation.loan_date)=%s AND YEAR(Reservation.loan_date)=%s GROUP BY School.school_name;""", (int(month), int(year)))
+        column_names = [i[0] for i in cursor.description]
+        query1_info = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+        cursor.close()
+        return '1'
 
 
 
@@ -666,7 +802,7 @@ def backup_and_return():
         # MySQL database connection details
         host = 'localhost'
         username = 'root'
-        password = '192123George'
+        password = 'Stelios.181002'
         database = 'website'
 
         # Command to create the backup using mysqldump
@@ -785,6 +921,104 @@ def update_school_info():
     my_message = "Your info have been updated successfully."
 
     return render_template('admin_schools.html', message = my_message, schools = session.get('schools'))
+
+
+
+@app.route('/admin_operators')
+def admin_operators():
+    connection = get_database_connection()
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT * FROM User WHERE approval_status = 'Pending' AND role = 'Operator'")
+    column_names = [i[0] for i in cursor.description]
+    pending_operators = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+
+    cursor.execute("SELECT * FROM User WHERE approval_status = 'Approved' AND role = 'Operator'")
+    column_names = [i[0] for i in cursor.description]
+    approved_operators = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+
+    cursor.execute("SELECT * FROM User WHERE approval_status = 'Rejected' AND role = 'Operator'")
+    column_names = [i[0] for i in cursor.description]
+    declined_operators = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+
+    # Close the cursor and database connection
+    cursor.close()
+    connection.close()
+    print("Database connection closed")
+
+
+    return render_template('admin_operators.html', 
+        pending_users = pending_operators,
+        approved_users = approved_operators,
+        declined_users = declined_operators
+    )
+    
+    
+    
+@app.route('/admin_operators_edit', methods=['POST'])
+def admin_operators_edit():
+    approve = request.form.get('approve')
+    decline = request.form.get('decline')
+    delete = request.form.get('delete')
+    
+    user_id = 0
+    if(approve is not None):
+        user_id = int(approve)
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.callproc('ApproveUser', (user_id,))
+
+        # Commit the changes to the database
+        connection.commit()
+
+        # Close the cursor and database connection
+        cursor.close()
+        connection.close()
+        print("Database connection closed")
+
+    elif (decline is not None):
+        user_id = int(decline)
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.callproc('RejectUser', (user_id,))
+        # Commit the changes to the database
+        connection.commit()
+
+        # Close the cursor and database connection
+        cursor.close()
+        connection.close()
+        print("Database connection closed")
+
+    else:
+        user_id = int(delete)
+        DeleteUser(user_id)
+    
+    return redirect(url_for('admin_operators'))
+
+
+# ----------------------Error Pages------------------ #
+
+@app.route('/logout')
+def logout():
+    # Clear the session variables
+    session.clear()
+
+    # Redirect to the login page
+    return redirect(url_for('login'))
+
+
+
+@app.route('/pending_approval')
+def pending_approval_page():
+    # Code to render the pending approval page
+    return render_template('pending_approval.html')
+
+
+
+@app.route('/error')
+def error_page():
+    # Code to render the error page
+    return render_template('error.html')
 
 
 # ----------------------Run-------------------------- #

@@ -31,18 +31,24 @@
 
             <div>
                 <p>All Reserved Books</p>
-                <ul class="books">
-                    <!-- Loop through the borrowed books data and generate list items -->
-                    {% for book in reserved_books %}
+                <ul class="book">
+                    <!-- Loop through the reserved books data and generate list items -->
+                    {% for book in books %}
                     <li>
-                        <img src="{{ book.image }}" alt="{{ book.title }}" />
+                        <img src="{{ book.img }}" alt="{{ book.title }}" />
                         <div class="book-info">
-                            <h2>{{ book.title }}</h2>
-                            <h5>{{ book.author }}</h5>
-                            <!-- Add other book information as needed -->
-                            <button type="submit" name="approve">Approve Reservation</button><br>
-                            <button type="submit" name="reject">Reject Reservation</button>
+                            <h3>Title: {{ book.title }}</h3>
+                            <p>Isbn: {{ book.isbn }}</p>
+                            <p>Publisher: {{ book.publisher }}</p>
+                            <p>Number of Pages: {{ book.number_of_pages }}</p>
+                            <p>Summary: {{ book.summary }}</p>
+                            <p>Available Copies: {{ book.available_copies }}</p>
+                            <p>Loan Date: {{ book.loan_date }}</p>
+                            <p>Return Date: {{ book.return_date }}</p>
+                            <p>Delayed: {% if book.del %} Yes {% else %} No {% endif %}</p>
                         </div>
+                        <button name="approve" value="approve">Approve</button>
+                        <button name="decline" value="decline">Decline</button>
                     </li>
                     {% endfor %}
                 </ul>

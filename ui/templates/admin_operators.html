@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "../static/css/admin_operators.css" />
+    <title>Operator Users Preview</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <nav>
+            <ul class="navbar">
+                <li><a href="{{ url_for('admin_home') }}">Main Page</a></li>
+                <li><a href="{{ url_for('admin_operators') }}">Operators</a></li>
+                <li><a href="{{ url_for('backup_restore') }}">Backup-Restore</a></li>
+                <li><a href="{{ url_for('admin_schools') }}">Schools</a></li>
+                <li><a href="{{ url_for('edit_personal_info') }}">Change Info</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="form">
+        <form action="/admin_operators_edit" method="POST">
+            <h2>All Pending Users</h2><br>
+            {% for user in pending_users %}
+            <ul class="pending">
+                <li>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p>Username: {{ user.username }}</p><br>
+                    <p>Age: {{ user.age }}</p><br>
+                    <p>Role: {{ user.role }}</p><br>
+                    <button name="approve" value="{{ user.user_id }}">Approve</button>
+                    <button name="decline" value="{{ user.user_id }}">Decline</button>
+                </li>
+            </ul>
+            {% endfor %}
+
+            <h2>All Approved Users</h2><br>
+            {% for user in approved_users %}
+            <ul class="approved">
+                <li>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p>Username: {{ user.username }}</p><br>
+                    <p>Age: {{ user.age }}</p><br>
+                    <p>Role: {{ user.role }}</p><br>
+                    <button name="decline" value="{{ user.user_id }}">Deactivate</button>
+                    <button name="delete" value="{{ user.user_id }}">Delete</button>
+                </li>
+            </ul>
+            {% endfor %}
+
+            <h2>All Declined Users</h2><br>
+            {% for user in declined_users %}
+            <ul class="declined">
+                <li>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p>Username: {{ user.username }}</p><br>
+                    <p>Age: {{ user.age }}</p><br>
+                    <p>Role: {{ user.role }}</p><br>
+                    <button name="approve" value="{{ user.user_id }}">Approve</button>
+                    <button name="delete" value="{{ user.user_id }}">Delete</button>
+                </li>
+            </ul>
+            {% endfor %}
+        </form>
+    </div>
+</body>
+</html>

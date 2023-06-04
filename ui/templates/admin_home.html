@@ -19,7 +19,7 @@
         <nav>
             <ul class="navbar">
                 <li><a href="{{ url_for('admin_home') }}">Main Page</a></li>
-                <li><a href="{{ url_for('approval') }}">Operators</a></li>
+                <li><a href="{{ url_for('admin_operators') }}">Operators</a></li>
                 <li><a href="{{ url_for('backup_restore') }}">Backup-Restore</a></li>
                 <li><a href="{{ url_for('admin_schools') }}">Schools</a></li>
                 <li><a href="{{ url_for('edit_personal_info') }}">Change Info</a></li>
@@ -30,14 +30,14 @@
 
 
     <div class="query 1">
-        <h3>List with the total number of loans per school</h3>
+        <form action="/admin_query1" method="POST">
+            <h3>List with the total number of loans per school</h3>
+
+            <label for="month" >Month: <input type="text" name="month" id="month" placeholder="ex. 1"></input></label>
+            <label for="year" >Year: <input type="text" name="year" id="year" placeholder="ex. 2022"></input></label>
+            <button type="submit" id="search" value="search">Search</button>
+        </form>
         
-        <label for="search">Search by?
-            <select id="search" name="search">
-                <option value="Year">Year</option>
-                <option value="Month">Month</option>
-            </select>
-        </label>
 
 
         <div class="school_loans">
@@ -47,35 +47,43 @@
         </div>
     </div>
 
+
+
     <div class="query 3">
         <h3>Young teachers (age less than 40 years) who have borrowed the most books and the number of books</h3>
 
         <div class="user">
-            {% for teacher in teachers %}
-                <p>{{ teacher_name }} has borrowed {{ total_books }} books.</p>
+            {% for teacher in result_3 %}
+                <p>{{ teacher.name}} has borrowed {{ teacher.loan_count }} books.</p>
             {% endfor %}
         </div>
     </div>
+
+
 
     <div class="query 4">
         <h3>Authors whose books have not been borrowed</h3>
 
         <div class="user">
-            {% for author in authors %}
-                <p>{{ author_name }}</p>
+            {% for author in result_4 %}
+                <p>{{ author.author_name }}</p>
             {% endfor %}
         </div>
     </div>
+
+
 
     <div class="query 5">
         <h3>Operators who have loaned the same number of books in a year, having more than 20 loans</h3>
 
         <div class="user">
-            {% for operator in operators %}
-                <p>{{ operator_name }} has loaned {{ total_loans }} books.</p> <!--The loans they have approved (status Borrowed/Returned)-->
+            {% for operator in operators_5 %}
+                <p>{{ operator.operator_name }} has loaned {{ operator.total_loans }} books.</p> <!--The loans they have approved (status Borrowed/Returned)-->
             {% endfor %}
         </div>
     </div>
+
+
 
     <div class="query 6">
         <h3>Top-3 pairs of categories that appeared most in borrowings</h3>
@@ -87,13 +95,14 @@
         </div>
     </div>
 
+
+
     <div class="query 7">
         <h3>All authors who have written at least 5 books less than the author with the most books.</h3>
 
         <div class="user">
-            <p>{{ author_with_most_books }} has written {{ most_books }} books (most).</p>
-            {% for author in authors %}
-                <p>{{ author_name }} has written {{ total_books }} books.</p>
+            {% for result in result_7 %}
+                <p>{{ result.author_name }} has written {{ result.books }} books.</p>
             {% endfor %}
         </div>
     </div>
