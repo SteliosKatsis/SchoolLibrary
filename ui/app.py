@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, redirect, url_for, render_template, session, flash
 import mysql.connector
 import sys
+import datetime
 
 app = Flask(__name__, static_folder='static')
 
@@ -25,6 +26,139 @@ def get_database_connection():
         
     return connection
 
+# ----------------------Delete Functions----------------------- #
+
+def DeleteUser(user_id):
+    connection = get_database_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT reservation_id FROM Reservation WHERE user_id = %s", (user_id,))
+    res_id = list()
+    while(True):
+        x = cursor.fetchone()
+        if x is None: break
+        res_id.append(x[0])
+        
+    cursor.execute("SELECT review_id FROM Review WHERE user_id = %s", (user_id,))
+    rev_id = list()
+    while(True):
+        x = cursor.fetchone()
+        if x is None: break
+        rev_id.append(x[0])
+        
+    for i in res_id:
+       # Call the stored procedure
+        cursor.callproc('DeleteReservation', (i,))
+        # Retrieve output parameters if applicable
+        cursor.fetchall()  # Print the output parameter value(s)
+        # Commit the changes
+        connection.commit()
+    for i in rev_id:
+       # Call the stored procedure
+        cursor.callproc('DeleteReview', (i,))
+        # Retrieve output parameters if applicable
+        cursor.fetchall()  # Print the output parameter value(s)
+        # Commit the changes
+        connection.commit()
+
+    cursor.execute("DELETE FROM User WHERE user_id = %s", (user_id,))
+    cursor.fetchall()
+    connection.commit()
+    
+    cursor.close()
+    connection.close()
+    
+
+def DeleteBook(book_id):
+    connection = get_database_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT reservation_id FROM Reservation WHERE book_id = %s", (book_id,))
+    res_id = list()
+    while(True):
+        x = cursor.fetchone()
+        if x is None: break
+        res_id.append(x[0])
+        
+    cursor.execute("SELECT review_id FROM Review WHERE book_id = %s", (book_id,))
+    rev_id = list()
+    while(True):
+        x = cursor.fetchone()
+        if x is None: break
+        rev_id.append(x[0])
+        
+    for i in res_id:
+       # Call the stored procedure
+        cursor.callproc('DeleteReservation', (i,))
+        # Retrieve output parameters if applicable
+        cursor.fetchall()  # Print the output parameter value(s)
+        # Commit the changes
+        connection.commit()
+    for i in rev_id:
+       # Call the stored procedure
+        cursor.callproc('DeleteReview', (i,))
+        # Retrieve output parameters if applicable
+        cursor.fetchall()  # Print the output parameter value(s)
+        # Commit the changes
+        connection.commit()
+        
+    cursor.execute("DELETE FROM Author WHERE book_id = %s", (book_id,))      # delete all authors
+    cursor.fetchall()
+    connection.commit()
+    cursor.execute("DELETE FROM Category WHERE book_id = %s", (book_id,))      # delete all categories
+    cursor.fetchall()
+    connection.commit()
+    cursor.execute("DELETE FROM Keyword WHERE book_id = %s", (book_id,))      # delete all keywords
+    cursor.fetchall()
+    connection.commit()
+    cursor.execute("DELETE FROM Book WHERE book_id = %s", (book_id,))
+    cursor.fetchall()
+    connection.commit()
+    
+    cursor.close()
+    connection.close()
+    
+    
+def DeleteSchool(school_id):
+    connection = get_database_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT reservation_id FROM Reservation WHERE user_id = %s", (school_id,))
+    res_id = list()
+    while(True):
+        x = cursor.fetchone()
+        if x is None: break
+        res_id.append(x[0])
+        
+    cursor.execute("SELECT review_id FROM Review WHERE user_id = %s", (school_id,))
+    rev_id = list()
+    while(True):
+        x = cursor.fetchone()
+        if x is None: break
+        rev_id.append(x[0])
+        
+    for i in res_id:
+       # Call the stored procedure
+        cursor.callproc('DeleteReservation', (i,))
+        # Retrieve output parameters if applicable
+        cursor.fetchall()  # Print the output parameter value(s)
+        # Commit the changes
+        connection.commit()
+    for i in rev_id:
+       # Call the stored procedure
+        cursor.callproc('DeleteReview', (i,))
+        # Retrieve output parameters if applicable
+        cursor.fetchall()  # Print the output parameter value(s)
+        # Commit the changes
+        connection.commit()
+
+    cursor.execute("DELETE FROM User WHERE user_id = %s", (school_id,))
+    cursor.fetchall()
+    connection.commit()
+    
+    cursor.close()
+    connection.close()
+    
 
 # ------------------------Login-------------------------- #
 
@@ -298,6 +432,110 @@ def operator_books():
 
 
 
+@app.route('/operator_books_edit', methods=['POST'])
+def edit_books_info():
+    update = request.form.get('update')
+    delete = request.form.get('delete')
+    
+    book_id = 0
+    if(update is not None):
+        book_id = int(update)
+        session['book_id'] = book_id
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM Book WHERE book_id = %s", (book_id,))
+        result = cursor.fetchone()
+        session['school_id'] = result[1]
+        
+        
+        return render_template('operator_books_change.html',
+            school_id = result[1],
+            isbn = result[2],
+            title = result[3],
+            publisher = result[4],
+            number_of_pages = result[5],
+            summary = result[6],
+            available_copies = result[7],
+            img = result[8],
+            language = result[9],
+            update = int(update),
+            books = session.get('books')
+            )
+    
+    elif(delete is not None):
+        book_id = int(delete)
+        session['book_id'] = book_id
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.callproc('DeleteBook', (book_id,))
+        
+        column_names = [i[0] for i in cursor.description]
+        new_books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+        session['books'] = new_books
+        
+        return render_template('operator_books.html', books = session.get('books'))
+        
+        
+
+@app.route('/update_book_info', methods=['POST'])
+def update_book_info():
+    book_id = session.get('book_id')
+    school_id = session.get('school_id')
+    new_isbn = request.form.get('isbn')
+    new_title = request.form.get('title')
+    new_publisher = request.form.get('publisher')
+    new_number_of_pages = request.form.get('number_of_pages')
+    new_summary = request.form.get('summary')
+    new_available_copies = request.form.get('available_copies')
+    new_img = request.form.get('img')
+    new_language = request.form.get('language')
+
+
+    # Create a new database connection for this request
+    connection = get_database_connection()
+
+    # Create a cursor object to interact with the database
+    cursor = connection.cursor()
+
+    cursor.callproc('UpdateBook',
+    (book_id, school_id, new_isbn, new_title, new_publisher, new_number_of_pages, 
+     new_summary, new_available_copies, new_img, new_language))
+    
+    cursor.execute("SELECT * FROM Book")
+
+    column_names = [i[0] for i in cursor.description]
+    new_books = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+    session['books'] = new_books
+
+    # Commit the changes to the database
+    connection.commit()
+
+    # Close the cursor and database connection
+    cursor.close()
+    connection.close()
+    print("Database connection closed")
+
+
+    # Store the new information
+    # session['school_name'] = new_school_name
+    # session['address'] = new_address
+    # session['city'] = new_city
+    # session['phone'] = new_phone
+    # session['email'] = new_email
+    # session['director_name'] = new_director_name
+
+    my_message = "Your info have been updated successfully."
+
+    return render_template('operator_books.html', message = my_message, books = session.get('books'))
+
+
+
+
+
+
+
+
+
 @app.route('/operator_borrowed')
 def operator_borrowed():    
     school_id = session.get('school_id')
@@ -400,14 +638,46 @@ def error_page():
 
 
 # --------------------- Administrator --------------------------- #
+
 @app.route('/backup_restore')
 def backup_restore():
     return render_template('admin_backup_restore.html')
 
 
+
 @app.route('/admin_home')
 def admin_home():
     return render_template('admin_home.html')
+
+
+
+@app.route('/admin_home', methods=['POST'])
+def backup_and_return():
+    backup = request.form.get('backup')
+    restore = request.form.get('restore')
+
+    if (backup == 'backup'):
+        # Get the current date and time
+        timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+
+        # Specify the backup file name
+        backup_file = f"backup_{timestamp}.sql"
+
+        # MySQL database connection details
+        host = 'localhost'
+        username = 'root'
+        password = '192123George'
+        database = 'website'
+
+        # Command to create the backup using mysqldump
+        backup_command = f"mysqldump -u {username} -p{password} -h {host} {database} > {backup_file}"
+
+        # Execute the backup command
+        os.system(backup_command)
+
+        # Redirect to a success page or perform other actions
+    return render_template('admin_home.html')
+
 
 
 @app.route('/admin_schools')
@@ -424,7 +694,9 @@ def admin_schools():
     schools = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
     session['schools'] = schools
     cursor.close()
+    
     return render_template('admin_schools.html', schools = schools)
+
 
 
 @app.route('/admin_schools_edit', methods=['POST'])
@@ -454,8 +726,17 @@ def edit_school_info():
             )
     
     elif(delete is not None):
-        school_id = delete
-        return redirect(url_for)
+        school_id = int(delete)
+        session['school_id'] = school_id
+        connection = get_database_connection()
+        cursor = connection.cursor()
+        cursor.callproc('DeleteSchool', (school_id,))
+        
+        column_names = [i[0] for i in cursor.description]
+        new_schools = [dict(zip(column_names, entry)) for entry in cursor.fetchall()]
+        session['schools'] = new_schools
+        
+        return render_template('admin_schools.html', schools = session.get('schools'))
         
         
 
@@ -493,13 +774,13 @@ def update_school_info():
     print("Database connection closed")
 
 
-    # Store the new information
-    session['school_name'] = new_school_name
-    session['address'] = new_address
-    session['city'] = new_city
-    session['phone'] = new_phone
-    session['email'] = new_email
-    session['director_name'] = new_director_name
+    # # Store the new information
+    # session['school_name'] = new_school_name
+    # session['address'] = new_address
+    # session['city'] = new_city
+    # session['phone'] = new_phone
+    # session['email'] = new_email
+    # session['director_name'] = new_director_name
 
     my_message = "Your info have been updated successfully."
 
